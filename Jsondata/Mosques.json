@@ -1,0 +1,105 @@
+{
+    "data": [
+      {
+        "id": 1,
+        "mosque": {
+          "title": "Mosque Ahle Hades Abdul Rehman Bin Auf",
+          "location": {
+            "latitude": "31.372753556317893",
+            "longitude": "74.18495578296596",
+            "address": "Lahore, Punjab, PK"
+          },
+          "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6p_Vh3c5UDNuhF_XpPZ_RQZoHda1vp8rD_D_pwJtfiw&s"
+        },
+        "timings": {
+          "Fajr": "05:05 (BST)",
+          "Dhuhr": "13:30 (BST)",
+          "Asr": "17:00 (BST)",
+          "Maghrib": "19:00 (BST)",
+          "Isha": "20:00 (BST)",
+          "Jummah": "13:45 (BST)"
+        }
+      },
+      {
+        "id": 2,
+        "mosque": {
+          "title": "Grand Jamia Mosque",
+          "location": {
+            "latitude": "31.36812527975100",
+            "longitude": "74.18557346877863",
+            "address": "Lahore, Punjab, PK"
+          },
+          "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Bahria_Mosque_Lahore.jpg/820px-Bahria_Mosque_Lahore.jpg"
+        },
+        "timings": {
+          "Fajr": "05:05 (BST)",
+          "Dhuhr": "13:30 (BST)",
+          "Asr": "17:00 (BST)",
+          "Maghrib": "19:00 (BST)",
+          "Isha": "20:00 (BST)",
+          "Jummah": "13:45 (BST)"
+        }
+      },
+      {
+        "id": 3,
+        "mosque": {
+          "title": "Masjid Al Noor",
+          "location": {
+            "latitude": "31.37602737344564",
+            "longitude": "74.18704480572386",
+            "address": "Lahore, Punjab, PK"
+          },
+          "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4ddOWTPmcJ0ef5tCs4lI-q23XPzY1lCajmTuVTPr4M_FP7qBfAsCpyGa8tHNvTKqYzWo&usqp=CAU"
+        },
+        "timings": {
+          "Fajr": "06:00 (BST)",
+          "Dhuhr": "13:00 (BST)",
+          "Asr": "16:50 (BST)",
+          "Maghrib": "19:00 (BST)",
+          "Isha": "19:45 (BST)",
+          "Jummah": "13:15 (BST)"
+        }
+      },
+      {
+        "id": 4,
+        "mosque": {
+          "title": "Rafi Mosque",
+          "location": {
+            "latitude": "31.363482036524456",
+            "longitude": "74.19208956524909",
+            "address": "Lahore, Punjab, PK"
+          },
+          "image": "https://lh5.googleusercontent.com/p/AF1QipMWMN87CPBeZtM_W91I39wGiY4WNgvdlNrHZ6zj=w426-h240-k-no"
+        },
+        "timings": {
+          "Fajr": "05:05 (BST)",
+          "Dhuhr": "13:00 (BST)",
+          "Asr": "17:00 (BST)",
+          "Maghrib": "19:00 (BST)",
+          "Isha": "20:00 (BST)",
+          "Jummah": "13:30 (BST)"
+        }
+      },
+      {
+        "id": 5,
+        "mosque": {
+          "title": "Jamia Masjid Ayesha",
+          "location": {
+            "latitude": "31.366335574870572",
+            "longitude": "74.21166508111244",
+            "address": "Lahore, Punjab, PK"
+          },
+          "image": "https://lh3.googleusercontent.com/p/AF1QipOc3O-MmdKvzQZRsW-7Xplx61FCBuJ2yVTfZVQB=s0"
+        },
+        "timings": {
+          "Fajr": "05:05 (BST)",
+          "Dhuhr": "13:00 (BST)",
+          "Asr": "17:00 (BST)",
+          "Maghrib": "19:00 (BST)",
+          "Isha": "20:00 (BST)",
+          "Jummah": "13:30 (BST)"
+        }
+      }
+    ]
+  }
+  

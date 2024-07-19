@@ -1,0 +1,605 @@
+{
+    "chapters": [
+        {
+            "id": 1,
+            "chapterId": 1,
+            "bookId": 1,
+            "book": "Sahih Al-Bukhari",
+            "english": "Revelation",
+            "shortname": "SB"
+        },
+        {
+            "id": 2,
+            "chapterId": 2,
+            "bookId": 1,
+            "book": "Sahih Al-Bukhari",
+            "english": "Call to Prayers",
+            "shortname": "SB"
+        },
+        {
+            "id": 3,
+            "chapterId": 3,
+            "bookId": 1,
+            "book": "Sahih Al-Bukhari",
+            "english": "Friday Prayer",
+            "shortname": "SB"
+        },
+        {
+            "id": 4,
+            "chapterId": 4,
+            "bookId": 1,
+            "book": "Sahih Al-Bukhari",
+            "english": "Fear Prayer",
+            "shortname": "SB"
+        },
+        {
+            "id": 5,
+            "chapterId": 5,
+            "bookId": 1,
+            "book": "Sahih Al-Bukhari",
+            "english": "The Two Festivals",
+            "shortname": "SB"
+        },
+        {
+            "id": 6,
+            "chapterId": 6,
+            "bookId": 1,
+            "book": "Sahih Al-Bukhari",
+            "english": "Witr Prayer",
+            "shortname": "SB"
+        },
+        {
+            "id": 7,
+            "chapterId": 7,
+            "bookId": 1,
+            "book": "Sahih Al-Bukhari",
+            "english": "Invoking Allah for Rain",
+            "shortname": "SB"
+        },
+        {
+            "id": 8,
+            "chapterId": 8,
+            "bookId": 1,
+            "book": "Sahih Al-Bukhari",
+            "english": "Eclipses",
+            "shortname": "SB"
+        },
+        {
+            "id": 9,
+            "chapterId": 9,
+            "bookId": 1,
+            "book": "Sahih Al-Bukhari",
+            "english": "Prostration During Recital of Qur'an",
+            "shortname": "SB"
+        },
+        {
+            "id": 10,
+            "chapterId": 10,
+            "bookId": 1,
+            "book": "Sahih Al-Bukhari",
+            "english": "Shortening the Prayers",
+            "shortname": "SB"
+        },
+        {
+            "id": 11,
+            "chapterId": 11,
+            "bookId": 1,
+            "book": "Sahih Al-Bukhari",
+            "english": "Prayer at Night",
+            "shortname": "SB"
+        },
+        {
+            "id": 12,
+            "chapterId": 12,
+            "bookId": 1,
+            "book": "Sahih Al-Bukhari",
+            "english": "Belief",
+            "shortname": "SB"
+        },
+        {
+            "id": 13,
+            "chapterId": 13,
+            "bookId": 1,
+            "book": "Sahih Al-Bukhari",
+            "english": "Prayer at Masjid Makkah and Madinah",
+            "shortname": "SB"
+        },
+        {
+            "id": 14,
+            "chapterId": 14,
+            "bookId": 1,
+            "book": "Sahih Al-Bukhari",
+            "english": "Actions while Praying",
+            "shortname": "SB"
+        },
+        {
+            "id": 15,
+            "chapterId": 15,
+            "bookId": 1,
+            "book": "Sahih Al-Bukhari",
+            "english": "Forgetfulness in Prayer",
+            "shortname": "SB"
+        },
+        {
+            "id": 16,
+            "chapterId": 16,
+            "bookId": 1,
+            "book": "Sahih Al-Bukhari",
+            "english": "Funerals (Al-Janaa'iz)",
+            "shortname": "SB"
+        },
+        {
+            "id": 17,
+            "chapterId": 17,
+            "bookId": 1,
+            "book": "Sahih Al-Bukhari",
+            "english": "Obligatory Charity Tax",
+            "shortname": "SB"
+        },
+        {
+            "id": 18,
+            "chapterId": 18,
+            "bookId": 1,
+            "book": "Sahih Al-Bukhari",
+            "english": "Hajj (Pilgrimage)",
+            "shortname": "SB"
+        },
+        {
+            "id": 19,
+            "chapterId": 19,
+            "bookId": 1,
+            "book": "Sahih Al-Bukhari",
+            "english": "`Umrah (Minor pilgrimage)",
+            "shortname": "SB"
+        },
+        {
+            "id": 20,
+            "chapterId": 20,
+            "bookId": 1,
+            "book": "Sahih Al-Bukhari",
+            "english": "Prevented from Completing the Pilgrimage",
+            "shortname": "SB"
+        },
+        {
+            "id": 21,
+            "chapterId": 1,
+            "bookId": 2,
+            "book": "Sahih Muslim      ",
+            "english": "Purification",
+            "shortname": "SM"
+        },
+        {
+            "id": 22,
+            "chapterId": 2,
+            "bookId": 2,
+            "book": "Sahih Muslim      ",
+            "english": "Prayer",
+            "shortname": "SM"
+        },
+        {
+            "id": 23,
+            "chapterId": 3,
+            "bookId": 2,
+            "book": "Sahih Muslim      ",
+            "english": "Friday Prayer",
+            "shortname": "SM"
+        },
+        {
+            "id": 24,
+            "chapterId": 4,
+            "bookId": 2,
+            "book": "Sahih Muslim      ",
+            "english": "Fasting",
+            "shortname": "SM"
+        },
+        {
+            "id": 25,
+            "chapterId": 5,
+            "bookId": 2,
+            "book": "Sahih Muslim      ",
+            "english": "Zakat",
+            "shortname": "SM"
+        },
+        {
+            "id": 26,
+            "chapterId": 6,
+            "bookId": 2,
+            "book": "Sahih Muslim      ",
+            "english": "Pilgrimage",
+            "shortname": "SM"
+        },
+        {
+            "id": 27,
+            "chapterId": 7,
+            "bookId": 2,
+            "book": "Sahih Muslim      ",
+            "english": "Call to Prayer",
+            "shortname": "SM"
+        },
+        {
+            "id": 28,
+            "chapterId": 8,
+            "bookId": 2,
+            "book": "Sahih Muslim      ",
+            "english": "Marriage",
+            "shortname": "SM"
+        },
+        {
+            "id": 29,
+            "chapterId": 9,
+            "bookId": 2,
+            "book": "Sahih Muslim      ",
+            "english": "Divorce",
+            "shortname": "SM"
+        },
+        {
+            "id": 30,
+            "chapterId": 10,
+            "bookId": 2,
+            "book": "Sahih Muslim       ",
+            "english": "The Book of Adhan and the Sunnah Regarding It",
+            "shortname": "SM"
+        },
+        {
+            "id": 31,
+            "chapterId": 1,
+            "bookId": 3,
+            "book": "Sunan an Nasai   ",
+            "english": "The Book of Purification",
+            "shortname": "N"
+        },
+        {
+            "id": 32,
+            "chapterId": 2,
+            "bookId": 3,
+            "book": "Sunan an Nasai   ",
+            "english": "The Book of Water",
+            "shortname": "N"
+        },
+        {
+            "id": 33,
+            "chapterId": 3,
+            "bookId": 3,
+            "book": "Sunan an Nasai   ",
+            "english": "The Book of Menstruation and Istihadah",
+            "shortname": "N"
+
+        },
+        {
+            "id": 34,
+            "chapterId": 4,
+            "bookId": 3,
+            "book": "Sunan an Nasai   ",
+            "english": "The Book of Ghusl and Tayammum",
+            "shortname": "N"
+        },
+        {
+            "id": 35,
+            "chapterId": 5,
+            "bookId": 3,
+            "book": "Sunan an Nasai   ",
+            "english": "The Book of Salah",
+            "shortname": "N"
+        },
+        {
+            "id": 36,
+            "chapterId": 6,
+            "bookId": 3,
+            "book": "Sunan an Nasai   ",
+            "english": "The Book of the Times (of Prayer)",
+            "shortname": "N"
+        },
+        {
+            "id": 37,
+            "chapterId": 7,
+            "bookId": 3,
+            "book": "Sunan an Nasai   ",
+            "english": "The Book of the Adhan (The Call to Prayer)",
+            "shortname": "N"
+        },
+        {
+            "id": 38,
+            "chapterId": 8,
+            "bookId": 3,
+            "book": "Sunan an Nasai   ",
+            "english": "The Book of the Masjids",
+            "shortname": "N"
+        },
+        {
+            "id": 39,
+            "chapterId": 9,
+            "bookId": 3,
+            "book": "Sunan an Nasai   ",
+            "english": "The Book of the Qiblah",
+            "shortname": "N"
+        },
+        {
+            "id": 40,
+            "chapterId": 10,
+            "bookId": 3,
+            "book": "Sunan an Nasai   ",
+            "english": "The Book of Leading the Prayer (Al-Imamah)",
+            "shortname": "N"
+        },
+        {
+            "id": 41,
+            "bookId": 4,
+            "chapterId": 1,
+            "book": "Sunan Abi Dawud",
+            "english": "Purification (Kitab Al-Taharah)",
+            "shortname": "AD"
+        },
+        {
+            "id": 42,
+            "bookId": 4,
+            "chapterId": 2,
+            "book": "Sunan Abi Dawud",
+            "english": "Prayer (Kitab Al-Salat)",
+            "shortname": "AD"
+        },
+        {
+            "id": 43,
+            "bookId": 4,
+            "chapterId": 3,
+            "book": "Sunan Abi Dawud",
+            "english": "The Book Of The Prayer For Rain (Kitab al-Istisqa')",
+            "shortname": "AD"
+        },
+        {
+            "id": 44,
+            "bookId": 4,
+            "chapterId": 4,
+            "book": "Sunan Abi Dawud",
+            "english": "Prayer (Kitab Al-Salat): Detailed Rules of Law about the Prayer during Journey",
+            "shortname": "AD"
+        },
+        {
+            "id": 45,
+            "bookId": 4,
+            "chapterId": 5,
+            "book": "Sunan Abi Dawud",
+            "english": "Prayer (Kitab Al-Salat): Voluntary Prayers",
+            "shortname": "AD"
+        },
+        {
+            "id": 46,
+            "bookId": 4,
+            "chapterId": 6,
+            "book": "Sunan Abi Dawud",
+            "english": "Prayer (Kitab Al-Salat): Detailed Injunctions about Ramadan",
+            "shortname": "AD"
+        },
+        {
+            "id": 47,
+            "bookId": 4,
+            "chapterId": 7,
+            "book": "Sunan Abi Dawud",
+            "english": "Prayer (Kitab Al-Salat): Prostration while reciting the Qur'an",
+            "shortname": "AD"
+        },
+        {
+            "id": 48,
+            "bookId": 4,
+            "chapterId": 8,
+            "book": "Sunan Abi Dawud",
+            "english": "Prayer (Kitab Al-Salat): Detailed Injunctions about Witr",
+            "shortname": "AD"
+        },
+        {
+            "id": 49,
+            "bookId": 4,
+            "chapterId": 9,
+            "book": "Sunan Abi Dawud",
+            "english": "Zakat (Kitab Al-Zakat)",
+            "shortname": "AD"
+        },
+        {
+            "id": 50,
+            "bookId": 4,
+            "chapterId": 10,
+            "book": "Sunan Abi Dawud",
+            "english": "The Book of Lost and Found Items",
+            "shortname": "AD"
+        },
+        {
+            "id": 51,
+            "bookId": 4,
+            "chapterId": 11,
+            "book": "Sunan Abi Dawud",
+            "english": "The Rites of Hajj (Kitab Al-Manasik Wa'l-Hajj)",
+            "shortname": "AD"
+        },
+        {
+            "id": 52,
+            "bookId": 4,
+            "chapterId": 12,
+            "book": "Sunan Abi Dawud",
+            "english": "Marriage (Kitab Al-Nikah)",
+            "shortname": "AD"
+        },
+        {
+            "id": 53,
+            "bookId": 4,
+            "chapterId": 13,
+            "book": "Sunan Abi Dawud",
+            "english": "Divorce (Kitab Al-Talaq)",
+            "shortname": "AD"
+        },
+        {
+            "id": 54,
+            "bookId": 4,
+            "chapterId": 14,
+            "book": "Sunan Abi Dawud",
+            "english": "Fasting (Kitab Al-Siyam)",
+            "shortname": "AD"
+        },
+        {
+            "id": 55,
+            "bookId": 4,
+            "chapterId": 15,
+            "book": "Sunan Abi Dawud",
+            "english": "Jihad (Kitab Al-Jihad)",
+            "shortname": "AD"
+        },
+        {
+            "id": 56,
+            "chapterId": 1,
+            "bookId": 5,
+            "book": "Jami at-Tirmidhi ",
+            "english": "The Book on Purification",
+            "shortname": "T"
+        },
+        {
+            "id": 57,
+            "chapterId": 2,
+            "bookId": 5,
+            "book": "Jami at-Tirmidhi ",
+            "english": "The Book on Salat (Prayer)",
+            "shortname": "T"
+        },
+        {
+            "id": 58,
+            "chapterId": 3,
+            "bookId": 5,
+            "book": "Jami at-Tirmidhi ",
+            "english": "The Book on Al-Witr",
+            "shortname": "T"
+        },
+        {
+            "id": 59,
+            "chapterId": 4,
+            "bookId": 5,
+            "book": "Jami at-Tirmidhi ",
+            "english": "The Book on the Day of Friday",
+            "shortname": "T"
+        },
+        {
+            "id": 60,
+            "chapterId": 5,
+            "bookId": 5,
+            "book": "Jami at-Tirmidhi ",
+            "english": "The Book on the Two Eids",
+            "shortname": "T"
+        },
+        {
+            "id": 61,
+            "chapterId": 6,
+            "bookId": 5,
+            "book": "Jami at-Tirmidhi ",
+            "english": "The Book on Traveling",
+            "shortname": "T"
+        },
+        {
+            "id": 62,
+            "chapterId": 7,
+            "bookId": 5,
+            "book": "Jami at-Tirmidhi ",
+            "english": "The Book on Zakat",
+            "shortname": "T"
+        },
+        {
+            "id": 63,
+            "chapterId": 8,
+            "bookId": 5,
+            "book": "Jami at-Tirmidhi ",
+            "english": "The Book on Fasting",
+            "shortname": "T"
+        },
+        {
+            "id": 64,
+            "chapterId": 9,
+            "bookId": 5,
+            "book": "Jami at-Tirmidhi ",
+            "english": "The Book on Hajj",
+            "shortname": "T"
+        },
+        {
+            "id": 65,
+            "chapterId": 10,
+            "bookId": 5,
+            "book": "Jami at-Tirmidhi ",
+            "english": "The Book on Jana''iz (Funerals)",
+            "shortname": "T"
+        },
+        {
+            "id": 66,
+            "chapterId": 1,
+            "bookId": 6,
+            "book": "Sunan Ibn Majah ",
+            "english": "The Book of Purification and its Sunnah",
+            "shortname": "SM"
+        },
+        {
+            "id": 67,
+            "chapterId": 2,
+            "bookId": 6,
+            "book": "Sunan Ibn Majah ",
+            "english": "The Book of the Prayer",
+            "shortname": "SM"
+        },
+        {
+            "id": 68,
+            "chapterId": 3,
+            "bookId": 6,
+            "book": "Sunan Ibn Majah ",
+            "english": "The Book of the Adhan and the Sunnah Regarding It",
+            "shortname": "SM"
+        },
+        {
+            "id": 69,
+            "chapterId": 4,
+            "bookId": 6,
+            "book": "Sunan Ibn Majah ",
+            "english": "The Book On The Mosques And The Congregations",
+            "shortname": "SM"
+        },
+        {
+            "id": 70,
+            "chapterId": 5,
+            "bookId": 6,
+            "book": "Sunan Ibn Majah ",
+            "english": "Establishing the Prayer and the Sunnah Regarding Them",
+            "shortname": "SM"
+        },
+        {
+            "id": 71,
+            "chapterId": 6,
+            "bookId": 6,
+            "book": "Sunan Ibn Majah ",
+            "english": "Chapters Regarding Funerals",
+            "shortname": "SM"
+        },
+        {
+            "id": 72,
+            "chapterId": 7,
+            "bookId": 6,
+            "book": "Sunan Ibn Majah ",
+            "english": "Fasting",
+            "shortname": "SM"
+        },
+        {
+            "id": 73,
+            "chapterId": 8,
+            "bookId": 6,
+            "book": "Sunan Ibn Majah ",
+            "english": "The Chapters Regarding Zakat",
+            "shortname": "SM"
+        },
+        {
+            "id": 74,
+            "chapterId": 9,
+            "bookId": 6,
+            "book": "Sunan Ibn Majah ",
+            "english": "The Chapters on Marriage",
+            "shortname": "SM"
+        },
+        {
+            "id": 75,
+            "chapterId": 10,
+            "bookId": 6,
+            "book": "Sunan Ibn Majah ",
+            "english": "The Chapters on Divorce",
+            "shortname": "SM"
+        }
+    ]
+}

@@ -1,0 +1,230 @@
+{
+    "2020": {
+        "Muharram": {
+            "hijriDate": "1441-00-27",
+            "gregorianDate": "2019-08-20"
+        },
+        "Ashura": {
+            "hijriDate": "1441-00-28",
+            "gregorianDate": "2019-08-21"
+        },
+        "Shab_e_Miraj": {
+            "hijriDate": "1441-02-23",
+            "gregorianDate": "2020-03-20"
+        },
+        "Shab_e_Barat": {
+            "hijriDate": "1441-04-07",
+            "gregorianDate": "2020-04-01"
+        },
+        "Ramadan": {
+            "hijriDate": "1441-05-27",
+            "gregorianDate": "2020-04-23"
+        },
+        "Laylat_al_Qadr": {
+            "hijriDate": "1441-07-15",
+            "gregorianDate": "2020-05-19"
+        },
+        "Eid_ul_Fitr": {
+            "hijriDate": "1441-08-16",
+            "gregorianDate": "2020-05-24"
+        },
+        "Hajj": {
+            "hijriDate": "1442-00-26",
+            "gregorianDate": "2020-07-29"
+        },
+        "Eid_ul_Adha": {
+            "hijriDate": "1442-00-27",
+            "gregorianDate": "2020-07-30"
+        }
+    },
+    "2021": {
+        "Muharram": {
+            "hijriDate": "1442-00-17",
+            "gregorianDate": "2020-08-09"
+        },
+        "Ashura": {
+            "hijriDate": "1442-00-18",
+            "gregorianDate": "2020-08-10"
+        },
+        "Shab_e_Miraj": {
+            "hijriDate": "1442-02-12",
+            "gregorianDate": "2021-03-11"
+        },
+        "Shab_e_Barat": {
+            "hijriDate": "1442-03-26",
+            "gregorianDate": "2021-03-28"
+        },
+        "Ramadan": {
+            "hijriDate": "1442-05-16",
+            "gregorianDate": "2021-04-13"
+        },
+        "Laylat_al_Qadr": {
+            "hijriDate": "1442-07-04",
+            "gregorianDate": "2021-05-31"
+        },
+        "Eid_ul_Fitr": {
+            "hijriDate": "1442-08-05",
+            "gregorianDate": "2021-05-13"
+        },
+        "Hajj": {
+            "hijriDate": "1443-00-16",
+            "gregorianDate": "2021-07-20"
+        },
+        "Eid_ul_Adha": {
+            "hijriDate": "1443-00-17",
+            "gregorianDate": "2021-07-21"
+        }
+    },
+    "2022": {
+        "Muharram": {
+            "hijriDate": "1443-00-07",
+            "gregorianDate": "2021-08-01"
+        },
+        "Ashura": {
+            "hijriDate": "1443-00-08",
+            "gregorianDate": "2021-08-02"
+        },
+        "Shab_e_Miraj": {
+            "hijriDate": "1443-02-02",
+            "gregorianDate": "2022-02-01"
+        },
+        "Shab_e_Barat": {
+            "hijriDate": "1443-03-17",
+            "gregorianDate": "2022-02-16"
+        },
+        "Ramadan": {
+            "hijriDate": "1443-05-07",
+            "gregorianDate": "2022-03-29"
+        },
+        "Laylat_al_Qadr": {
+            "hijriDate": "1443-06-25",
+            "gregorianDate": "2022-05-16"
+        },
+        "Eid_ul_Fitr": {
+            "hijriDate": "1443-07-26",
+            "gregorianDate": "2022-06-15"
+        },
+        "Hajj": {
+            "hijriDate": "1444-00-06",
+            "gregorianDate": "2022-08-09"
+        },
+        "Eid_ul_Adha": {
+            "hijriDate": "1444-00-07",
+            "gregorianDate": "2022-08-10"
+        }
+    },
+    "2023": {
+        "Muharram": {
+            "hijriDate": "1444-00-26",
+            "gregorianDate": "2022-07-30"
+        },
+        "Ashura": {
+            "hijriDate": "1444-00-27",
+            "gregorianDate": "2022-08-07"
+        },
+        "Shab_e_Miraj": {
+            "hijriDate": "1444-01-21",
+            "gregorianDate": "2023-02-18"
+        },
+        "Shab_e_Barat": {
+            "hijriDate": "1444-03-04",
+            "gregorianDate": "2023-03-07"
+        },
+        "Ramadan": {
+            "hijriDate": "1444-04-23",
+            "gregorianDate": "2023-03-23"
+        },
+        "Laylat_al_Qadr": {
+            "hijriDate": "1444-06-11",
+            "gregorianDate": "2023-04-18"
+        },
+        "Eid_ul_Fitr": {
+            "hijriDate": "1444-07-12",
+            "gregorianDate": "2023-04-21"
+        },
+        "Hajj": {
+            "hijriDate": "1445-00-23",
+            "gregorianDate": "2023-06-27"
+        },
+        "Eid_ul_Adha": {
+            "hijriDate": "1445-00-24",
+            "gregorianDate": "2023-06-28"
+        }
+    },
+    "2024": {
+        "Muharram": {
+            "hijriDate": "1445-00-16",
+            "gregorianDate": "2023-07-19"
+        },
+        "Ashura": {
+            "hijriDate": "1445-00-17",
+            "gregorianDate": "2023-07-27"
+        },
+        "Shab_e_Miraj": {
+            "hijriDate": "1445-01-11",
+            "gregorianDate": "2024-02-08"
+        },
+        "Shab_e_Barat": {
+            "hijriDate": "1445-02-25",
+            "gregorianDate": "2024-02-25"
+        },
+        "Ramadan": {
+            "hijriDate": "1445-04-14",
+            "gregorianDate": "2024-03-12"
+        },
+        "Laylat_al_Qadr": {
+            "hijriDate": "1445-06-02",
+            "gregorianDate": "2024-04-07"
+        },
+        "Eid_ul_Fitr": {
+            "hijriDate": "1445-07-03",
+            "gregorianDate": "2024-04-11"
+        },
+        "Hajj": {
+            "hijriDate": "1446-00-13",
+            "gregorianDate": "2024-06-15"
+        },
+        "Eid_ul_Adha": {
+            "hijriDate": "1446-00-14",
+            "gregorianDate": "2024-06-16"
+        }
+    },
+    "2025": {
+        "Muharram": {
+            "hijriDate": "1445-00-16",
+            "gregorianDate": "2024-07-07"
+        },
+        "Ashura": {
+            "hijriDate": "1445-00-17",
+            "gregorianDate": "2024-07-15"
+        },
+        "Shab_e_Miraj": {
+            "hijriDate": "1446-07-27",
+            "gregorianDate": "2025-01-27"
+        },
+        "Shab_e_Barat": {
+            "hijriDate": "1446-08-15",
+            "gregorianDate": "2025-02-14"
+        },
+        "Ramadan": {
+            "hijriDate": "1446-09-01",
+            "gregorianDate": "2025-03-01"
+        },
+        "Laylat_al_Qadr": {
+            "hijriDate": "1446-09-027",
+            "gregorianDate": "2025-03-27"
+        },
+        "Eid_ul_Fitr": {
+            "hijriDate": "1446-10-01",
+            "gregorianDate": "2025-03-30"
+        },
+        "Hajj": {
+            "hijriDate": "1446-11-09",
+            "gregorianDate": "2025-06-05"
+        },
+        "Eid_ul_Adha": {
+            "hijriDate": "1446-11-10",
+            "gregorianDate": "2025-06-06"
+        }
+    }
+}

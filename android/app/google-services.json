@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "783668382478",
+    "project_id": "jamaat-428211",
+    "storage_bucket": "jamaat-428211.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:783668382478:android:d3b2295eaa78d59ad2255f",
+        "android_client_info": {
+          "package_name": "com.jamaat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "783668382478-0tvj9ga3j9kis2129pb686rcrf925o7t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGvQe7bYT5KQEmAccmGwBULVLXvf6AcB0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "783668382478-0tvj9ga3j9kis2129pb686rcrf925o7t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
