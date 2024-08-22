@@ -1,13 +1,15 @@
 import React, { useState, useEffect, memo } from "react";
-import { View, StyleSheet, Pressable, Image, Text } from "react-native";
+import { View, StyleSheet,Text } from "react-native";
 import TopBar from "./TopBar";
 import { useAuthContext } from "../../Navigations/AuthContext";
-import HeaderBack from "../../Components/HeaderBack";
+import { useTranslation } from "react-i18next";
+
 const QiblaHome = ({ navigation }) => {
   const { currentLocation, setCurrentLocation } = useAuthContext();
   const [kaabaDistance, setKaabaDistance] = useState(null);
   const [kaabaAngle, setKaabaAngle] = useState(null);
   const kaabaCoordinates = { latitude: 21.422527833115584, longitude: 39.826186353745136 }; // Kaaba coordinates
+  const { t } = useTranslation();
 
   useEffect(() => {
     const calculateValues = () => {
@@ -102,7 +104,7 @@ const QiblaHome = ({ navigation }) => {
         <View style={styles.distanceItem}>
           <View style={{ flex: 1, flexDirection: "row" }}>
             <View style={{ flexDirection: "column" }}>
-              <Text style={{ fontSize: 13, fontWeight: "500",color:'#fff' }}>Lat/Lon</Text>
+              <Text style={{ fontSize: 13, fontWeight: "500",color:'#fff' }}>{t('lat_long')}</Text>
               <Text style={{ fontSize: 13, fontWeight: "500",color:'#fff' }}>
                 {currentLocation &&
                   `${currentLocation.latitude.toFixed(
@@ -114,7 +116,7 @@ const QiblaHome = ({ navigation }) => {
               {kaabaDistance != null && (
                 <View style={{ marginHorizontal: 37 }}>
                   <Text style={{ fontSize: 13, fontWeight: "500",color:'#fff' }}>
-                    Distance to Kaaba
+                  {t('distance_qaba')}
                   </Text>
                   <Text
                     style={{
@@ -131,7 +133,7 @@ const QiblaHome = ({ navigation }) => {
               {kaabaAngle != null && (
                 <View>
                   <Text style={{ fontSize: 13, fontWeight: "500",color:'#fff' }}>
-                    Qibla Angle
+                  {t('qibla_angle')}
                   </Text>
                   <Text
                     style={{

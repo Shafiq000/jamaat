@@ -1,21 +1,23 @@
-import { SafeAreaView, StyleSheet, Text, View, Pressable } from 'react-native'
-import React, { useState, useEffect, memo } from 'react'
-import Icon from 'react-native-vector-icons/Ionicons';
-import Location_Pin from 'react-native-vector-icons/Entypo';
-import PrayerTime from '../PrayerTime/PrayerTime'
+import { SafeAreaView, StyleSheet, Text, View, Pressable, I18nManager } from 'react-native';
+import React, { useState, useEffect, memo } from 'react';
+import PrayerTime from '../PrayerTime/PrayerTime';
 import PrayerTable from '../PrayerTime/PrayerTable';
 import { useAuthContext } from '../../Navigations/AuthContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CheckInternet from './CheckInternet';
 import HeaderBack from '../../Components/HeaderBack';
+import { useTranslation } from "react-i18next";
+
 const MainScreen = ({ navigation, route }) => {
     const [today, setToday] = useState(new Date());
-    const country = route.params?.country
+    const country = route.params?.country;
     const [hijriDate, setHijriDate] = useState('');
     const [gregorianDate, setGregorianDate] = useState('');
     const { themeMode } = useAuthContext();
     const [selectedCountry, setSelectedCountry] = useState(null);
-    const [isConnected, setIsConnected] = useState(false)
+    const [isConnected, setIsConnected] = useState(false);
+    const { t, i18n } = useTranslation();
+
     useEffect(() => {
         loadSelectedCountry();
     }, []);
@@ -40,11 +42,18 @@ const MainScreen = ({ navigation, route }) => {
                     (item) => item.gregorian.date === formatDate(today)
                 );
                 if (currentDateData) {
+                    const hijriMonthEn = currentDateData.hijri.month.en;
+                    const translatedHijriMonth = t(`month_name.${hijriMonthEn}`);
                     setHijriDate(
-                        `${currentDateData.hijri.day} ${currentDateData.hijri.month.en}, ${currentDateData.hijri.year}`
+                        `${currentDateData.hijri.day} ${translatedHijriMonth} ${currentDateData.hijri.year}`
                     );
+
+                    // Get the translation for Gregorian month and day
+                    const gregorianMonth = t(`month_name_gregorian.${currentDateData.gregorian.month.en}`);
+                    const gregorianDay = t(`day_name_gregorian.${currentDateData.gregorian.weekday.en}`);
+
                     setGregorianDate(
-                        `${currentDateData.gregorian.weekday.en}, ${currentDateData.gregorian.day} ${currentDateData.gregorian.month.en}`
+                        `${gregorianDay}, ${currentDateData.gregorian.day} ${gregorianMonth}`
                     );
                 }
             } catch (error) {
@@ -59,9 +68,10 @@ const MainScreen = ({ navigation, route }) => {
         };
         fetchData();
     }, [today]);
+
     return (
         <SafeAreaView style={[{ flex: 1, backgroundColor: "#FFFFFF" }, themeMode === "dark" && { backgroundColor: "#1C1C22" }]}>
-            <HeaderBack title={'Prayer Time'} navigation={navigation}/>
+            <HeaderBack title={t('prayer_time')} navigation={navigation} />
             <View style={{ flex: 1 }}>
                 {isConnected ? (
                     <>
@@ -71,28 +81,16 @@ const MainScreen = ({ navigation, route }) => {
                                 <Text style={[{ fontSize: 16, fontWeight: "400", left: 20 }, themeMode === "dark" && { color: "#fff" }]}>{gregorianDate}</Text>
                             </View>
                         </View>
-                        {/* <View style={styles.mainContent}>
-                            <View style={styles.innerContent}>
-                                <Location_Pin name='location-pin' size={25} style={[themeMode === "dark" && { color: "#fff" }]} />
-                                <Text style={[{ fontSize: 15, fontWeight: "400", width: "40%" }, themeMode === "dark" && { color: "#fff" }]}>{[country || selectedCountry]}</Text>
-                                <Pressable hitSlop={30} onPress={() => navigation.navigate('Setlocation')}>
-                                    <Text style={styles.location}>Change Location</Text>
-                                </Pressable>
-                            </View>
-                        </View> */}
                         <View style={{ flex: 1 }}>
                             <PrayerTime />
-                            {/* <PrayerTimeChanged/> */}
                             <PrayerTable />
                         </View>
                     </>
                 ) : (<CheckInternet isConnected={isConnected} setIsConnected={setIsConnected} />)}
-
-
             </View>
         </SafeAreaView>
-    )
-}
+    );
+};
 
 export default memo(MainScreen);
 
@@ -110,7 +108,6 @@ const styles = StyleSheet.create({
         borderTopWidth: 1,
         margin: 20,
         alignItems: "center"
-
     },
     innerContent: {
         top: 20,
@@ -123,6 +120,5 @@ const styles = StyleSheet.create({
         fontWeight: "600",
         left: 30,
         color: "#0a9484",
-
     }
 });

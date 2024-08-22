@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Dimensions, SafeAreaView } from 'react-native';
 import { useAuthContext } from '../Navigations/AuthContext';
 import moment from 'moment';
 import LinearGradient from 'react-native-linear-gradient';
+import { useTranslation } from "react-i18next";
 
 const windowWidth = Dimensions.get("window").width;
 
@@ -13,10 +14,10 @@ const PrayerTime = () => {
   const [remainingTime, setRemainingTime] = useState('');
   const [intervalId, setIntervalId] = useState(null); // Define intervalId state
   const [currentPrayerIndex, setCurrentPrayerIndex] = useState();
+  const { t } = useTranslation();
 
   useEffect(() => {
     fetchPrayerData();
-    // Clear interval when component unmounts
     return () => {
       if (intervalId) clearInterval(intervalId);
     };
@@ -176,9 +177,9 @@ const PrayerTime = () => {
       style={styles.prayerContainer}
      >
      <View style={styles.prayerContainer}>
-        <Text style={{ right: 106 ,color:'#fff'}}>Next Prayer</Text>
+        <Text style={{ right: 106 ,color:'#fff'}}>{t('next_jamaat')}</Text>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%', paddingHorizontal: 15, top: 5 }}>
-          <Text style={{ fontSize: 20, fontWeight: '700' ,color:'#FFA500'}}>{nextPrayer.name}</Text>
+          <Text style={{ fontSize: 20, fontWeight: '700' ,color:'#FFA500'}}>{t(`prayer.${nextPrayer.name.toLowerCase()}`)}</Text>
           <Text style={ {fontSize: 20, fontWeight: '700',color:'#fff'}}>- {remainingTime}</Text>
         </View>
         {prayerData.map((prayers, index) => (
@@ -190,7 +191,7 @@ const PrayerTime = () => {
                   // currentPrayerIndex === index && {borderColor:'#FFA500',borderWidth:1, color: '#FFA500' }
                   currentPrayerIndex === index && {color: '#FFA500' }
                 ]}>
-                  {prayerName}
+                   {t(`prayer.${prayerName.toLowerCase()}`)}
                 </Text>
                 <Text style={[styles.prayerTime, currentPrayerIndex === index && { color: '#FFA500' }]}>
                   {prayerTime.split(' ')[0]}

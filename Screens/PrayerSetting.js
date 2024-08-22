@@ -5,24 +5,26 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import RadioComponent from '../Components/RadioComponent';
 import { useAuthContext } from '../Navigations/AuthContext';
 import HeaderBack from '../Components/HeaderBack';
+import { useTranslation } from "react-i18next";
+
 const calculationData = [
-    { key: 1, label: 'MWL', angle: '14º, 16º' },
-    { key: 2, label: 'Isna', angle: '15º, 15º' },
-    { key: 3, label: 'Egypt', angle: '19.5º, 17.5º' },
-    { key: 4, label: 'Makkah', angle: '18.5º, 90º' },
-    { key: 5, label: 'Karachi', angle: '18º, 18º' },
-    { key: 6, label: 'Tehran', angle: '17.7º, 14º' },
-    { key: 7, label: 'Jafri', angle: '16º, 14º' },
+    { key: 1, label: 'mwl', angle: '14º, 16º' },
+    { key: 2, label: 'isna', angle: '15º, 15º' },
+    { key: 3, label: 'egypt', angle: '19.5º, 17.5º' },
+    { key: 4, label: 'makkah', angle: '18.5º, 90º' },
+    { key: 5, label: 'karachi', angle: '18º, 18º' },
+    { key: 6, label: 'tehran', angle: '17.7º, 14º' },
+    { key: 7, label: 'jafri', angle: '16º, 14º' },
 ];
 const juristicion = [
-    { key: 1, label: 'Standard' },
-    { key: 2, label: 'Hanafi' },
+    { key: 1, label: 'standard' },
+    { key: 2, label: 'hanafi' },
 ];
 const latitude = [
-    { key: 1, label: 'None' },
-    { key: 2, label: 'Angle based' },
-    { key: 3, label: 'One Seventh' },
-    { key: 4, label: 'Night Middle' },
+    { key: 1, label: 'none' },
+    { key: 2, label: 'anglebase' },
+    { key: 3, label: 'oneseven' },
+    { key: 4, label: 'nightmiddle' },
 ];
 
 const PrayerSetting = ({ navigation }) => {
@@ -36,6 +38,7 @@ const PrayerSetting = ({ navigation }) => {
     const [calculationSelected, setcalculationSelected] = useState('');
     const [juristicionSelected, setJuristicionSelected] = useState('');
     const [latitudeSelected, setlatitudeSelected] = useState('');
+    const { t } = useTranslation();
 
     useEffect(() => {
         AsyncStorage.getItem('calculationMethod').then(value => {
@@ -81,19 +84,18 @@ const PrayerSetting = ({ navigation }) => {
         }));
     };
 
-    const renderItem = ({ item, stateKey }) => (
+    const renderItem = ({ item }) => (
         <RadioComponent
-            item={item}
-            stateKey={stateKey}
+            item={{ ...item, label: t(`prayeritem.${item.label}`) }}
+            stateKey={'calculationMethod'}
             handleOptionPress={calculationMethodOptionPress}
             selectedKey={calculationSelected}
-            style={{fontSize:15}}
         />
     );
 
     const renderJuristicionItem = ({ item }) => (
         <RadioComponent
-            item={item}
+            item={{ ...item, label: t(`prayeritem.${item.label}`) }}
             stateKey={'juristicion'}
             handleOptionPress={juristicionOptionPress}
             selectedKey={juristicionSelected}
@@ -102,7 +104,7 @@ const PrayerSetting = ({ navigation }) => {
 
     const renderLatitudeItem = ({ item }) => (
         <RadioComponent
-            item={item}
+            item={{ ...item, label: t(`prayeritem.${item.label}`) }}
             stateKey={'latitude'}
             handleOptionPress={latitudeOptionPress}
             selectedKey={latitudeSelected}
@@ -114,24 +116,24 @@ const PrayerSetting = ({ navigation }) => {
             <FlatList
                 data={[
                     { key: 'header' },
-                    { key: 'calculationMethod', data: calculationData, title: 'Calculation Method', onPress: () => toggleRadioGroup('calculationMethod'), option: showRadioGroups.calculationMethod },
-                    { key: 'juristicion', data: juristicion, title: 'Asr Juristicion', onPress: () => toggleRadioGroup('juristicion'), option: showRadioGroups.juristicion },
-                    { key: 'latitude', data: latitude, title: 'High latitude Method', onPress: () => toggleRadioGroup('latitude'), option: showRadioGroups.latitude }
+                    { key: 'calculationMethod', data: calculationData, title: t('calculationdata'), onPress: () => toggleRadioGroup('calculationMethod'), option: showRadioGroups.calculationMethod },
+                    { key: 'juristicion', data: juristicion, title: t('asr_juristicion'), onPress: () => toggleRadioGroup('juristicion'), option: showRadioGroups.juristicion },
+                    { key: 'latitude', data: latitude, title: t('high_latitude'), onPress: () => toggleRadioGroup('latitude'), option: showRadioGroups.latitude }
                 ]}
                 renderItem={({ item }) =>
                     item.key === 'header' ? (
-                      <HeaderBack title={'Setting'} navigation={navigation} />
+                        <HeaderBack title={t('setting')} navigation={navigation} />
                     ) : (
                         <View style={{ flexDirection: "column" }}>
                             <Pressable onPress={item.onPress} style={styles.body}>
-                                <Text style={[styles.title, themeMode === "dark" && { color: "#fff" }]}>{item.title}</Text>
+                                <Text style={[styles.title, themeMode === "dark" && { color: "#fff" }]}> {t(`prayeritem.${item.title.toLowerCase()}`)}</Text>
                                 <Icon name="down" size={18} right={10} style={[themeMode === "dark" && { color: "#fff" }]} />
                             </Pressable>
                             {item.option && showRadioGroups[item.key] && (
                                 <FlatList
                                     data={item.data}
-                                    renderItem={item.key === 'juristicion' ? renderJuristicionItem : item.key === 'latitude' ? renderLatitudeItem : ({ item }) => renderItem({ item, stateKey: item.key })}
-                                    keyExtractor={subItem => subItem.key}
+                                    renderItem={item.key === 'juristicion' ? renderJuristicionItem : item.key === 'latitude' ? renderLatitudeItem : renderItem}
+                                    keyExtractor={subItem => subItem.key.toString()}
                                 />
                             )}
                         </View>
@@ -139,9 +141,6 @@ const PrayerSetting = ({ navigation }) => {
                 }
                 keyExtractor={(item, index) => item.key + index}
             />
-          
-                
-           
         </SafeAreaView>
     );
 };

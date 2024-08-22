@@ -7,11 +7,13 @@ import PhoneIcon from 'react-native-vector-icons/FontAwesome';
 import EmailLogin from '../Components/Auth/Login/EmailLogin';
 import PhonLogin from '../Components/Auth/Login/PhonLogin';
 import { useAuthContext } from '../Navigations/AuthContext';
+import { useTranslation } from "react-i18next";
 
 const Tab = createMaterialTopTabNavigator();
 
 const Login = () => {
     const { themeMode } = useAuthContext();
+    const { t } = useTranslation();
 
     return (
         <ScrollView style={[
@@ -24,8 +26,8 @@ const Login = () => {
                     <Text style={[
                         { fontSize: 25, fontWeight: '800' },
                         themeMode === "dark" && { color: '#fff' }
-                    ]}>Let's Get Started</Text>
-                    <Text style={themeMode === "dark" && { color: '#AAAAAA' }}>Login to your account</Text>
+                    ]}>{t('get_start')}</Text>
+                    <Text style={themeMode === "dark" && { color: '#AAAAAA' }}>{t('login_account')}</Text>
                 </View>
             </View>
             <Tab.Navigator
@@ -62,7 +64,7 @@ const Login = () => {
                                         { color: focused ? (themeMode === "dark" ? '#fff' : '#000') : '#AAAAAA' }
                                     ]}
                                 >
-                                    Email
+                                    {t('email')}
                                 </Text>
                             </View>
                         )
@@ -87,7 +89,7 @@ const Login = () => {
                                         { color: focused ? (themeMode === "dark" ? '#fff' : '#000') : '#AAAAAA' }
                                     ]}
                                 >
-                                    Phone
+                                     {t('phone')}
                                 </Text>
                             </View>
                         )

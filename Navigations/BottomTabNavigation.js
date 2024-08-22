@@ -5,17 +5,19 @@ import { useWindowDimensions } from 'react-native';
 import Home from '../Screens/Home';
 import HomeIcon from 'react-native-vector-icons/Ionicons';
 import FeedIcon from 'react-native-vector-icons/FontAwesome6';
-import AppIcon from 'react-native-vector-icons/AntDesign';
 import SubIcon from 'react-native-vector-icons/AntDesign';
 import Header from '../Components/Header'; 
 import { useAuthContext } from './AuthContext';
 import Feed from '../Screens/Feed';
 import Sub from '../Screens/Sub';
+import { useTranslation } from "react-i18next";
+
 const Tab = createBottomTabNavigator();
 
 const BottomTabNavigation = ({ navigation }) => {
     const windowHeight = useWindowDimensions().height;
     const { themeMode } = useAuthContext();
+    const { t } = useTranslation();
 
     return (
         <View style={{ flex: 1 }}>
@@ -34,31 +36,28 @@ const BottomTabNavigation = ({ navigation }) => {
                 }}
             >
                 <Tab.Screen
-                    name="Home"
+                    name={t('home')}
                     component={Home}
                     options={{
                         headerLeft: () => <Header navigation={navigation} title="Home" />, 
-                        tabBarLabel: 'Home',
                         tabBarIcon: ({ color, size }) => (
                             <HomeIcon name='home-outline' style={{ fontSize: size, color: color }} />
                         ),
                     }}
                 />
                 <Tab.Screen
-                    name="Feed"
+                    name={t('feed')}
                     component={Feed}
                     options={{
-                        tabBarLabel: 'Feed',
                         tabBarIcon: ({ color, size }) => (
                             <FeedIcon name='square-rss' style={{ fontSize: size, color: color }} />
                         ),
                     }}
                 />
                 <Tab.Screen
-                    name="Sub"
+                    name={t('sub')}
                     component={Sub}
                     options={{
-                        tabBarLabel: 'Sub',
                         tabBarIcon: ({ color, size }) => (
                             <SubIcon name='staro' style={{ fontSize: size, color: color }} />
                         ),

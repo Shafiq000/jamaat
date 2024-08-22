@@ -7,11 +7,13 @@ import {
   FlatList,
   Pressable,
   Image,
-  TouchableOpacity, AppState
+  TouchableOpacity, AppState,I18nManager
 } from "react-native";
 import Sound from "react-native-sound";
 import { useAuthContext } from "../../Navigations/AuthContext";
 import HeaderBack from "../../Components/HeaderBack";
+import { useTranslation } from "react-i18next";
+
 const NAME_SEEK_TIME = {
   0: 11000,
   1: 13000,
@@ -864,6 +866,7 @@ const NameCard = memo(
             <Text
               style={[
                 styles.subtitle,
+                { textAlign: I18nManager.isRTL ? 'left' : 'right' },
                 themeMode == "dark" && { color: "#FFF" },
               ]}
             >
@@ -872,6 +875,7 @@ const NameCard = memo(
             <Text
               style={[
                 styles.description,
+                { textAlign: I18nManager.isRTL ? 'left' : 'right' },
                 themeMode == "dark" && { color: "#FFF" },
               ]}
             >
@@ -901,6 +905,8 @@ const HomeAsmaUlHusna = ({ navigation }) => {
   const [appState, setAppState] = useState(AppState.currentState);
   const flatListRef = useRef(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const { t } = useTranslation();
+
   const handleScroll = (event) => {
     const offsetY = event.nativeEvent.contentOffset.y;
     const itemIndex = Math.ceil(offsetY / 75);
@@ -981,7 +987,7 @@ const HomeAsmaUlHusna = ({ navigation }) => {
   );
   return (
     <SafeAreaView style={[styles.container, themeMode == "dark" && { backgroundColor: "black" },]}>
-      <HeaderBack title={'99 Names of Allah'} navigation={navigation}/>
+      <HeaderBack title={t('allah_name_99')} navigation={navigation}/>
       <View style={styles.bodyContainer}>
         <Text
           style={[styles.headerTextSubTitle, themeMode == "dark" && { color: "#FFF" },]}>
@@ -993,7 +999,7 @@ const HomeAsmaUlHusna = ({ navigation }) => {
         </Text>
         <TouchableOpacity onPress={autoPlayToggal}>
           <Text style={[styles.autoBtn, themeMode == "dark" && { color: "#0a9484", fontWeight: "600", fontSize: 18 }]}>
-            Auto Play: {isAutoPlayActive ? "ON" : "OFF"}
+           {t('auto_play')}: {isAutoPlayActive ? t("on") : t( "off")}
           </Text>
         </TouchableOpacity>
       </View>

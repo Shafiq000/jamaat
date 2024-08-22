@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Pressable, Alert } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Pressable, Alert,I18nManager } from 'react-native';
 import HeaderBack from '../Components/HeaderBack';
 import Icon from 'react-native-vector-icons/Entypo';
 import { useAuthContext } from '../Navigations/AuthContext';
+import { useTranslation } from "react-i18next";
 
 const UpdatePassword = ({ navigation }) => {
     const { updateUserPassword, themeMode } = useAuthContext(); // Destructure themeMode
@@ -18,6 +19,7 @@ const UpdatePassword = ({ navigation }) => {
     const [rightIcon, setRightIcon] = useState('eye');
     const [confrmrightIcon, setConfrmRightIcon] = useState('eye');
     const [NewrightIcon, setNewRightIcon] = useState('eye');
+    const { t } = useTranslation();
 
     const handlePasswordVisibility = () => {
         setRightIcon(rightIcon === 'eye' ? 'eye-with-line' : 'eye');
@@ -51,10 +53,10 @@ const UpdatePassword = ({ navigation }) => {
 
     return (
         <View style={[styles.container, themeMode === 'dark' && styles.darkContainer]}>
-            <HeaderBack title={'Password'} navigation={navigation} />
+            <HeaderBack title={t('password')} navigation={navigation} />
             <View style={styles.inputContainer}>
                 <View style={styles.inputLabelContainer}>
-                    <Text style={[styles.label, themeMode === 'dark' && styles.darkText]}>Current Password:</Text>
+                    <Text style={[styles.label, themeMode === 'dark' && styles.darkText]}>{t('current_password')}:</Text>
                 </View>
                 <View style={styles.inputWrapper}>
                     <TextInput
@@ -80,7 +82,7 @@ const UpdatePassword = ({ navigation }) => {
             </View>
             <View style={styles.inputContainer}>
                 <View style={styles.inputLabelContainer}>
-                    <Text style={[styles.label, themeMode === 'dark' && styles.darkText]}>New Password:</Text>
+                    <Text style={[styles.label, themeMode === 'dark' && styles.darkText]}>{t('new_password')}:</Text>
                 </View>
                 <View style={styles.inputWrapper}>
                     <TextInput
@@ -106,7 +108,7 @@ const UpdatePassword = ({ navigation }) => {
             </View>
             <View style={styles.inputContainer}>
                 <View style={styles.inputLabelContainer}>
-                    <Text style={[styles.label, themeMode === 'dark' && styles.darkText]}>Confirm Password:</Text>
+                    <Text style={[styles.label, themeMode === 'dark' && styles.darkText]}>{t('confirm_password')}:</Text>
                 </View>
                 <View style={styles.inputWrapper}>
                     <TextInput
@@ -141,7 +143,7 @@ const UpdatePassword = ({ navigation }) => {
                     <Text style={[
                         styles.saveButtonText,
                         themeMode === 'dark' && styles.darkSaveButtonText
-                    ]}>Save</Text>
+                    ]}>{t('save_button')}</Text>
                 </Pressable>
             </View>
         </View>
@@ -188,6 +190,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         paddingLeft: 10,
         color: '#000000',
+        paddingHorizontal:I18nManager.isRTL ? 50 : 0,
     },
     darkTextInput: {
         backgroundColor: '#363B33',

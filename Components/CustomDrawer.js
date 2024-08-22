@@ -8,13 +8,15 @@ import ToggleIcon from 'react-native-vector-icons/Feather';
 import SettingIcon from 'react-native-vector-icons/Ionicons';
 import ShareIcon from 'react-native-vector-icons/AntDesign';
 import LogoutIcon from 'react-native-vector-icons/Feather';
+import RegisterIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useAuthContext } from '../Navigations/AuthContext';
+import { useTranslation } from "react-i18next";
 
 const CustomDrawer = ({ navigation, ...props }) => {
   const aboutUsURL = 'https://mslm.io/jamaat/about';
   const privacyUsURL = 'https://mslm.io/jamaat/privacy-policy';
   const { themeMode, toggleThemeMode, isAuthenticated, signOut } = useAuthContext();
-
+  const { t } = useTranslation();
   const aboutUs = () => {
     Linking.openURL(aboutUsURL);
   };
@@ -42,32 +44,39 @@ const CustomDrawer = ({ navigation, ...props }) => {
         <View style={{ marginTop: 10 }}>
           <DrawerItem
             icon={() => <SettingIcon name='settings-outline' size={25} color={'#0a9484'} />}
-            label={'Setting'}
+            label={t('setting')}
             labelStyle={[styles.txtcolor, themeMode === "dark" && { color: "#fff" }]}
             onPress={() => navigation.navigate('Setting')}
           />
+          {isAuthenticated ? (
+            <DrawerItem
+              icon={() => <RegisterIcon name='clipboard-text-play-outline' size={25} color={'#0a9484'} />}
+              label={t('register_masjid')}
+              labelStyle={[styles.txtcolor, themeMode === 'dark' && { color: '#fff' }]}
+              onPress={() => {navigation.navigate('RegisterMasjid1');}}/>
+          ) : null}
           <DrawerItem
             icon={() => <AboutIcon name='message-alert-outline' size={25} color={'#0a9484'} />}
-            label={'About Us'}
+            label={t('about_us')}
             labelStyle={[styles.txtcolor, themeMode === "dark" && { color: "#fff" }]}
             onPress={aboutUs}
           />
           <DrawerItem
             icon={() => <PrivacyIcon name='privacy-tip' size={25} color={'#0a9484'} />}
-            label={'Privacy Policy'}
+            label={t('privacy_policy')}
             labelStyle={[styles.txtcolor, themeMode === 'dark' && { color: '#fff' }]}
             onPress={privacy}
           />
           <DrawerItem
             icon={() => <ShareIcon name='sharealt' size={25} color={'#0a9484'} />}
-            label={'Share App'}
+            label={t('share_app')}
             labelStyle={[styles.txtcolor, themeMode === 'dark' && { color: '#fff' }]}
             onPress={onShare}
           />
           <View style={styles.drawerItem}>
             <ToggleIcon name='eye' size={25} color={'#0a9484'} />
             <View style={styles.drawerItemLabelContainer}>
-              <Text style={[styles.drawerItemLabel, themeMode === "dark" && { color: "#fff" }]}>Dark Mode</Text>
+              <Text style={[styles.drawerItemLabel, themeMode === "dark" && { color: "#fff" }]}>{t('dark_mode')}</Text>
               <Switch
                 trackColor={{ false: '#767577', true: '#0C8A7C' }}
                 thumbColor={themeMode === "dark" ? '#0a9484' : '#f4f3f4'}
@@ -79,7 +88,7 @@ const CustomDrawer = ({ navigation, ...props }) => {
           {isAuthenticated ? (
             <DrawerItem
               icon={() => <LogoutIcon name='log-out' size={25} color={'#0a9484'} />}
-              label={'Log Out'}
+              label={t('log_out')}
               labelStyle={[styles.txtcolor, themeMode === 'dark' && { color: '#fff' }]}
               onPress={async () => {
                 await signOut();

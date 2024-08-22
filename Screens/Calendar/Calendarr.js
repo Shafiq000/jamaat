@@ -1,11 +1,13 @@
-import React, { useState, useEffect, useRef, useCallback, memo } from 'react';
-import { View, Text, Pressable, ScrollView } from 'react-native';
+import React, { useState, useEffect, useRef, useCallback, memo, } from 'react';
+import { View, Text, Pressable, ScrollView, I18nManager } from 'react-native';
 import { Calendar, CalendarUtils } from 'react-native-calendars';
 import Icon from 'react-native-vector-icons/AntDesign';
 import DatePicker from 'react-native-date-picker';
 import eventData from '../../Jsondata/events.json';
 import Events from '../Calendar/Events';
 import { useAuthContext } from '../../Navigations/AuthContext';
+import { useTranslation } from "react-i18next";
+
 // import moment from 'moment-hijri';
 // import HijriDate from 'hijri-date';
 const Calendarr = () => {
@@ -17,6 +19,8 @@ const Calendarr = () => {
   const [open, setOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState();
   const [markedDates, setMarkedDates] = useState({});
+  const { t } = useTranslation();
+
   const CALENDAR_HEIGHT = 300;
   const getDate = () => {
     return CalendarUtils.getCalendarDateString(INITIAL_DATE);
@@ -61,8 +65,8 @@ const Calendarr = () => {
     }
     setDate(day.dateString);
   };
-  const LEFT_ICON = { name: "left", size: 22, color: themeMode === "dark" ? "#fff" : "#000" };
-  const RIGHT_ICON = { name: "right", size: 22, color: themeMode === "dark" ? "#fff" : "#000" };
+  const LEFT_ICON = { name: I18nManager.isRTL ? 'right' : 'left', size: 22, color: themeMode === "dark" ? "#fff" : "#000" };
+  const RIGHT_ICON = { name: I18nManager.isRTL ? 'left' : 'right', size: 22, color: themeMode === "dark" ? "#fff" : "#000" };
   const IconContainer = ({ iconObject }) => {
     return (
       <View >
@@ -76,8 +80,6 @@ const Calendarr = () => {
       showsVerticalScrollIndicator={false}
       style={{ flex: 1, flexDirection: "column" }} ref={scrollViewRef} >
       <Calendar
-        //  style={[themeMode === "dark" && {backgroundColor:"#1C1C22" }]}
-        // theme={theme}
         key={themeMode}
         theme={themes[themeMode]}
         ref={calendarRef}
@@ -87,16 +89,27 @@ const Calendarr = () => {
         showControls={true}
         renderArrow={(direction) => direction == 'left' ? <IconContainer iconObject={LEFT_ICON} /> : <IconContainer iconObject={RIGHT_ICON} />}
         onDayPress={onDayPress}
-        // renderHeader={renderHeader}
         hideExtraDays={true}
         enableSwipeMonths={true}
         markedDates={{
           ...markedDates,
           [getDate(INITIAL_DATE)]: { selected: true, dotColor: '#000', selectedColor: '#0A9484', selectedTextColor: '#fff' },
-          [selectedDate]: { selected: true, dotColor: 'green', selectedColor: "#DCF2EF" ,selectedTextColor: '#000'}
+          [selectedDate]: { selected: true, dotColor: 'green', selectedColor: "#DCF2EF", selectedTextColor: '#000' }
         }}
         monthFormat={"MMM, yyyy "}
         scrollEnabled={true}
+        renderHeader={(date) => {
+          const month = date.getMonth() + 1; // 0-based month, so add 1
+          const formattedMonth = month < 10 ? `0${month}` : `${month}`;
+          const year = date.getFullYear();
+          const monthName = t(`month_gregorian.${formattedMonth}`);
+          
+          return (
+            <Text style={{ fontWeight: 'bold', fontSize: 18, color: themeMode === 'dark' ? '#fff' : '#000' }}>
+              {`${monthName}, ${year}`}
+            </Text>
+          );
+        }}
       />
       <DatePicker
         theme={themeMode === "dark" ? "dark" : "light"}
@@ -122,6 +135,7 @@ const Calendarr = () => {
       <Events selectedDate={selectedDate} />
     </ScrollView>
   );
+  
 };
 const RenderHeader = ({ setOpen }) => {
   const { themeMode } = useAuthContext();

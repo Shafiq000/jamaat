@@ -2,14 +2,18 @@ import { StyleSheet, Text, View, Image, Pressable } from 'react-native'
 import React, { memo, useState } from 'react';
 import Calendarr from '../Calendar/Calendarr'
 import HeaderBack from '../../Components/HeaderBack';
+import { useTranslation } from "react-i18next";
+
 const CalendarMainScreen = ({ navigation }) => {
+    const { t, i18n } = useTranslation();
+
     // const [language, setLanguage] = useState('Islam');
     // const handlePress = () => {
     //     setLanguage((prevLanguage) => (prevLanguage === 'Islam' ? 'Georgian' : 'Islam'));
     // };
     return (
         <View style={{ flex: 1 }}>
-            <HeaderBack title={'Calendat'} navigation={navigation} />
+            <HeaderBack title={t('calendar')} navigation={navigation} />
             {/* <View style={styles.container}>
                 <Text style={{ fontSize: 20, fontWeight: "600", color: "#fff", left: 25 }}>Calendar</Text>
                 <View style={{ flexDirection: "row", alignItems: "center", height: 50, width: 100, justifyContent: "center" }}>

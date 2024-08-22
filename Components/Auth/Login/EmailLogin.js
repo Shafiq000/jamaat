@@ -1,8 +1,9 @@
-import { StyleSheet, Text, View, SafeAreaView, Image, TextInput, Pressable, Alert,ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, Image, TextInput, I18nManager, Pressable, Alert, ActivityIndicator } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import Icon from 'react-native-vector-icons/Entypo';
 import { useAuthContext } from '../../../Navigations/AuthContext';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { useTranslation } from "react-i18next";
 
 const EmailLogin = ({ navigation }) => {
     const [valueMail, setValueMail] = useState('');
@@ -13,6 +14,7 @@ const EmailLogin = ({ navigation }) => {
     const [rightIcon, setRightIcon] = useState('eye');
     const { signInWithEmail, user, signInWithGoogle, isAuthenticated, facebookSignIn, themeMode } = useAuthContext();
     const [loading, setLoading] = useState();
+    const { t } = useTranslation();
 
     useEffect(() => {
         GoogleSignin.configure({ webClientId: '783668382478-0tvj9ga3j9kis2129pb686rcrf925o7t.apps.googleusercontent.com' });
@@ -48,7 +50,7 @@ const EmailLogin = ({ navigation }) => {
         } catch (error) {
             Alert.alert('Login failed', 'Please check your credentials and try again.');
             console.error("Error logging in: ", error);
-        } finally{
+        } finally {
             setLoading(false);
         }
     };
@@ -63,7 +65,7 @@ const EmailLogin = ({ navigation }) => {
             navigation.navigate('Home', { name, email });
         } catch (error) {
             console.error("Error signing in with Google:", error);
-        } finally{
+        } finally {
             setLoading(false);
         }
     };
@@ -74,107 +76,109 @@ const EmailLogin = ({ navigation }) => {
             await facebookSignIn();
         } catch (error) {
             console.error("Error signing in with Facebook:", error);
-        } finally{
+        } finally {
             setLoading(false);
         }
     };
 
     return (
-        <SafeAreaView style={[{ flex: 1, backgroundColor: '#FFFFFF' },themeMode === "dark" && { backgroundColor: "#1C1C22" }]}>
-           {loading ? (
-            <ActivityIndicator size="large" color="#ffffff" />
-           ):(
-            <>
-             <View style={{ flexDirection: 'column', justifyContent: 'center' }}>
-                <View style={{ justifyContent: 'center', paddingHorizontal: 10 }}>
-                    <View style={{ paddingHorizontal: 17, paddingVertical: 10 }}>
-                        <Text style={themeMode === "dark" && { color: '#fff' }}>Email:</Text>
+        <SafeAreaView style={[{ flex: 1, backgroundColor: '#FFFFFF' }, themeMode === "dark" && { backgroundColor: "#1C1C22" }]}>
+            {loading ? (
+                <ActivityIndicator size="large" color="#ffffff" />
+            ) : (
+                <>
+                    <View style={{ flexDirection: 'column', justifyContent: 'center' }}>
+                        <View style={{ justifyContent: 'center', paddingHorizontal: 10 }}>
+                            <View style={{ paddingHorizontal: 17, paddingVertical: 10 }}>
+                                <Text style={themeMode === "dark" && { color: '#fff' }}>{t('email')}:</Text>
+                            </View>
+                            <TextInput
+                                value={valueMail}
+                                onChangeText={value => setValueMail(value)}
+                                style={[
+                                    styles.inputEmail,
+                                    { textAlign: I18nManager.forceRTL ? 'right' : 'left' },
+                                    { borderColor: ismailInputFocused ? '#000' : '#AAAAAA' },
+                                    themeMode === "dark" && { borderColor: '#fff', color: '#fff' }
+                                ]}
+                                placeholder='name@email.com'
+                                placeholderTextColor={themeMode === "dark" ? '#fff' : '#AAAAAA'}
+                                onFocus={() => setMailInputFocused(true)}
+                                onSubmitEditing={() => setMailInputFocused(false)}
+                                onEndEditing={() => setMailInputFocused(false)}
+                            />
+                        </View>
+                        <View style={{ justifyContent: 'center', marginVertical: 20 }}>
+                            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical: 10, paddingHorizontal: 25 }}>
+                                <Text style={themeMode === "dark" && { color: '#fff' }}>{t('password')}:</Text>
+                                <Pressable>
+                                    <Text style={themeMode === "dark" && { color: '#fff' }}>{t('forgot_password')}</Text>
+                                </Pressable>
+                            </View>
+                            <TextInput
+                                secureTextEntry={passwordVisibility}
+                                value={valuePswrd}
+                                onChangeText={value => setValuePswrd(value)}
+                                style={[
+                                    styles.input,
+                                    { textAlign: I18nManager.forceRTL ? 'right' : 'auto' },
+                                    { borderColor: isPswrdInputFocused ? '#000' : '#AAAAAA' },
+                                    themeMode === "dark" && { borderColor: '#fff', color: '#fff' }
+                                ]}
+                                placeholder={t('type_password')}
+                                placeholderTextColor={themeMode === "dark" ? '#fff' : '#AAAAAA'}
+                                onFocus={() => setPswrdInputFocused(true)}
+                                onSubmitEditing={() => setPswrdInputFocused(false)}
+                                onEndEditing={() => setPswrdInputFocused(false)}
+                            />
+                            <Pressable style={{ position: 'absolute', right: 35, bottom: 8 }} onPress={handlePasswordVisibility}>
+                                <Icon name={rightIcon} size={23} color={themeMode === "dark" ? '#fff' : '#AAAAAA'} />
+                            </Pressable>
+                        </View>
+                        <View style={{ alignItems: 'center', justifyContent: 'center', paddingVertical: 5 }}>
+                            <Pressable
+                                onPress={handleLogin}
+                                style={[
+                                    styles.loginButton,
+                                    themeMode === "dark" && { backgroundColor: '#fff' }
+                                ]}
+                            >
+                                <Text style={[
+                                    styles.loginButtonText,
+                                    themeMode === "dark" && { color: '#000' }
+                                ]}>
+                                    {t('log_in')}
+                                </Text>
+                            </Pressable>
+                        </View>
+                        <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', paddingVertical: 10 }}>
+                            <Text style={themeMode === "dark" && { color: '#fff' }}>{t('not_account')}</Text>
+                            <Pressable onPress={handleToSignup}>
+                                <Text style={[styles.signUpText, themeMode === "dark" && { color: '#fff' }]}>{t('sign_up')}</Text>
+                            </Pressable>
+                        </View>
+                        <View style={{ alignItems: 'center', justifyContent: 'center', flexDirection: 'row', paddingHorizontal: 50, gap: 10 }}>
+                            <View style={[
+                                styles.divider,
+                                themeMode === "dark" && { borderBottomColor: '#fff' }
+                            ]}></View>
+                            <Text style={themeMode === "dark" && { color: '#fff' }}> {t('or')} </Text>
+                            <View style={[
+                                styles.divider,
+                                themeMode === "dark" && { borderBottomColor: '#fff' }
+                            ]}></View>
+                        </View>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingVertical: 20, gap: 20 }}>
+                            <Pressable onPress={googlesignin}>
+                                <Image source={require('../../../src/Images/google.png')} style={styles.image} />
+                            </Pressable>
+                            <Pressable onPress={handleFacebookSignIn}>
+                                <Image source={require('../../../src/Images/facebook.png')} style={styles.image} />
+                            </Pressable>
+                        </View>
                     </View>
-                    <TextInput
-                        value={valueMail}
-                        onChangeText={value => setValueMail(value)}
-                        style={[
-                            styles.inputEmail,
-                            { borderColor: ismailInputFocused ? '#000' : '#AAAAAA' },
-                            themeMode === "dark" && { borderColor: '#fff', color: '#fff' }
-                        ]}
-                        placeholder='name@email.com'
-                        placeholderTextColor={themeMode === "dark" ? '#fff' : '#AAAAAA'}
-                        onFocus={() => setMailInputFocused(true)}
-                        onSubmitEditing={() => setMailInputFocused(false)}
-                        onEndEditing={() => setMailInputFocused(false)}
-                    />
-                </View>
-                <View style={{ justifyContent: 'center', marginVertical: 20 }}>
-                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical: 10, paddingHorizontal: 25 }}>
-                        <Text style={themeMode === "dark" && { color: '#fff' }}>Password:</Text>
-                        <Pressable>
-                            <Text style={themeMode === "dark" && { color: '#fff' }}>Forgot Password ?</Text>
-                        </Pressable>
-                    </View>
-                    <TextInput
-                        secureTextEntry={passwordVisibility}
-                        value={valuePswrd}
-                        onChangeText={value => setValuePswrd(value)}
-                        style={[
-                            styles.input,
-                            { borderColor: isPswrdInputFocused ? '#000' : '#AAAAAA' },
-                            themeMode === "dark" && { borderColor: '#fff', color: '#fff' }
-                        ]}
-                        placeholder='type your password'
-                        placeholderTextColor={themeMode === "dark" ? '#fff' : '#AAAAAA'}
-                        onFocus={() => setPswrdInputFocused(true)}
-                        onSubmitEditing={() => setPswrdInputFocused(false)}
-                        onEndEditing={() => setPswrdInputFocused(false)}
-                    />
-                    <Pressable style={{ position: 'absolute', right: 35, bottom: 8 }} onPress={handlePasswordVisibility}>
-                        <Icon name={rightIcon} size={23} color={themeMode === "dark" ? '#fff' : '#AAAAAA'} />
-                    </Pressable>
-                </View>
-                <View style={{ alignItems: 'center', justifyContent: 'center', paddingVertical: 5 }}>
-                    <Pressable
-                        onPress={handleLogin}
-                        style={[
-                            styles.loginButton,
-                            themeMode === "dark" && { backgroundColor: '#fff' }
-                        ]}
-                    >
-                        <Text style={[
-                            styles.loginButtonText,
-                            themeMode === "dark" && { color: '#000' }
-                        ]}>
-                            Log in
-                        </Text>
-                    </Pressable>
-                </View>
-                <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', paddingVertical: 10 }}>
-                    <Text style={themeMode === "dark" && { color: '#fff' }}>Don't have an account? </Text>
-                    <Pressable onPress={handleToSignup}>
-                        <Text style={[styles.signUpText, themeMode === "dark" && { color: '#fff' }]}>Sign Up</Text>
-                    </Pressable>
-                </View>
-                <View style={{ alignItems: 'center', justifyContent: 'center', flexDirection: 'row', paddingHorizontal: 50, gap: 10 }}>
-                    <View style={[
-                        styles.divider,
-                        themeMode === "dark" && { borderBottomColor: '#fff' }
-                    ]}></View>
-                    <Text style={themeMode === "dark" && { color: '#fff' }}> or </Text>
-                    <View style={[
-                        styles.divider,
-                        themeMode === "dark" && { borderBottomColor: '#fff' }
-                    ]}></View>
-                </View>
-                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingVertical: 20, gap: 20 }}>
-                    <Pressable onPress={googlesignin}>
-                        <Image source={require('../../../src/Images/google.png')} style={styles.image} />
-                    </Pressable>
-                    <Pressable onPress={handleFacebookSignIn}>
-                        <Image source={require('../../../src/Images/facebook.png')} style={styles.image} />
-                    </Pressable>
-                </View>
-            </View>
-            </>
-           )}
+                </>
+            )}
         </SafeAreaView>
     );
 }
@@ -184,11 +188,13 @@ export default EmailLogin;
 const styles = StyleSheet.create({
     input: {
         height: 40,
-        width: '90%',
+        width: '89%',
         marginLeft: '5%',
         borderWidth: 2,
         borderRadius: 5,
-        paddingLeft: 10
+        paddingLeft: 10,
+        paddingRight:I18nManager.forceRTL ? 180 : 0,
+        textAlign: I18nManager.forceRTL ? 'right' : 'left',
     },
     inputEmail: {
         height: 40,
@@ -196,7 +202,11 @@ const styles = StyleSheet.create({
         marginLeft: '3%',
         borderWidth: 2,
         borderRadius: 5,
-        paddingLeft: 8
+        paddingLeft: 8,
+        paddingRight:I18nManager.forceRTL ? 180 : 0,
+        // padding:I18nManager.forceRTL ? 5 : 0,
+
+        textAlign: I18nManager.forceRTL ? 'right' : 'left',
     },
     loginButton: {
         height: 40,

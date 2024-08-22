@@ -10,6 +10,7 @@ import {
   Modal,
   TextInput,
   Vibration,
+  I18nManager
 } from "react-native";
 import { Svg, Circle } from "react-native-svg";
 import BottomSheets from "./BottomSheets";
@@ -19,6 +20,8 @@ import GestureRecognizer from "react-native-swipe-gestures";
 import { useAuthContext } from "../../Navigations/AuthContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import HeaderBack from "../../Components/HeaderBack";
+import { useTranslation } from "react-i18next";
+
 const TasbihMainScreen = ({ navigation }) => {
   const { themeMode, setThemeMode } = useAuthContext();
   const [info, setInfo] = useState(false);
@@ -32,6 +35,7 @@ const TasbihMainScreen = ({ navigation }) => {
   const [selectedTranslation, setSelectedTranslation] = useState("");
   const [showSelectedData, setshowSelectedData] = useState(false);
   const [sound, setSound] = useState(null);
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     loadAsyncData();
@@ -219,7 +223,7 @@ const TasbihMainScreen = ({ navigation }) => {
   // };
   return (
     <SafeAreaView style={[{ flex: 1, backgroundColor: "#FFFFFF" }, themeMode == "dark" && { backgroundColor: "#000" }]}>
-      <HeaderBack title={'Tasbih'} navigation={navigation} />
+      <HeaderBack title={t('tasbih')} navigation={navigation} />
       <GestureRecognizer
         onSwipeLeft={onSwipeLeft}
         // onSwipeDown={onSwipeDown}
@@ -283,7 +287,7 @@ const TasbihMainScreen = ({ navigation }) => {
         >
           <View style={styles.centeredView}>
             <View style={[styles.modalView, themeMode == "dark" && { backgroundColor: "#282828" }]}>
-              <Text style={[styles.modalText, themeMode == "dark" && { color: "#fff" }]}>Set Counter</Text>
+              <Text style={[styles.modalText, themeMode == "dark" && { color: "#fff" }]}> {t('set_counter')}</Text>
               <View style={{ flex: 1, justifyContent: "center" }}>
                 <TextInput
                   style={[styles.input, themeMode == "dark" && { color: "#fff", borderColor: "#fff" }]}
@@ -291,7 +295,7 @@ const TasbihMainScreen = ({ navigation }) => {
                   selectionColor="#000"
                   onChangeText={(text) => setEditedNumber(text)}
                   // value={editedNumber}
-                  placeholder="Enter target Beads"
+                  placeholder= {t('enter_beads')}
                   keyboardType="numeric"
                   placeholderTextColor={themeMode === "dark" ? "#686868" : "#cbcbcb"}
                 />
@@ -307,7 +311,7 @@ const TasbihMainScreen = ({ navigation }) => {
                 >
                   <Pressable style={{ paddingVertical: 10, flex: 1, alignItems: "center", }} onPress={() => setModalVisible(false)}>
                     <Text style={[{ fontSize: 15, fontWeight: "600" }, themeMode == "dark" && { color: "#fff" }]}>
-                      Cancel
+                      {t('cancel')}
                     </Text>
                   </Pressable>
                   <Pressable
@@ -320,7 +324,7 @@ const TasbihMainScreen = ({ navigation }) => {
                     }}
                     onPress={saveEditedNumber}
                   >
-                    <Text style={[{ fontSize: 15, fontWeight: "600" }, themeMode == "dark" && { color: "#fff" }]}>Set</Text>
+                    <Text style={[{ fontSize: 15, fontWeight: "600" }, themeMode == "dark" && { color: "#fff" }]}> {t('set')}</Text>
                   </Pressable>
                 </View>
               </View>
@@ -351,42 +355,52 @@ const TasbihMainScreen = ({ navigation }) => {
               //   backgroundColor:'red'
             }}
           >
-            <Svg style={{ top: 100, left: 50 }}>
-              {/* Circle */}
-              <Circle
-                cx="130"
-                cy="120"
-                r="110"
-                fill="transparent"
-                stroke={outerCircleColor}
-                strokeWidth={strokeWidth}
-              />
-              {/* Animated Circle */}
-              <AnimatedCircle
-                cx="130"
-                cy="120"
-                r="110"
-                fill="transparent"
-                stroke={innerCircleColor}
-                strokeWidth={strokeWidth}
-                strokeDasharray={[circleCircumference, circleCircumference]}
-                strokeDashoffset={animatedStrokeDashoffset}
-              />
-              <Text style={[styles.counterNumber, themeMode == "dark" && { backgroundColor: "#000" },]}>
-                {count}
-              </Text>
-            </Svg>
+            <View style={{
+              top: 100,
+              justifyContent: 'center',
+              alignItems: 'center',
+              position: 'absolute',
+              left: I18nManager.isRTL ? 60 : '50%',
+              transform: [{ translateX: I18nManager.isRTL ? 0 : -120 }]
+            }}>
+              <Svg height="240" width="240">
+                {/* Circle */}
+                <Circle
+                  cx="120"
+                  cy="120"
+                  r="110"
+                  fill="transparent"
+                  stroke={outerCircleColor}
+                  strokeWidth={strokeWidth}
+                />
+                {/* Animated Circle */}
+                <AnimatedCircle
+                  cx="120"
+                  cy="120"
+                  r="110"
+                  fill="transparent"
+                  stroke={innerCircleColor}
+                  strokeWidth={strokeWidth}
+                  strokeDasharray={[circleCircumference, circleCircumference]}
+                  strokeDashoffset={animatedStrokeDashoffset}
+                />
+                <Text style={[styles.counterNumber, themeMode === "dark" && { backgroundColor: "#000" }]}>
+                  {count}
+                </Text>
+              </Svg>
+            </View>
+
           </Pressable>
         </View>
         <Text style={{ alignSelf: "center", bottom: 90, color: "#E8E8E8" }}>
-          Tap anywhere to Begin
+        {t('tap_anywhere')} 
         </Text>
         <Pressable
           style={[styles.bottomSheetBtn, themeMode == "dark" && { backgroundColor: "#282828", borderBottomColor: "#EAEAEA", borderBottomWidth: 1 }]}
           onPress={() => setBottomSheetVisible(true)}
         >
           <Text style={{ fontSize: 15, fontWeight: "500", color: "#0a9484" }}>
-            View all Dikhar
+          {t('view_all_zikr')} 
           </Text>
         </Pressable>
         {bottomSheetVisible && (
@@ -440,12 +454,26 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   counterNumber: {
-    fontSize: 55,
+    // fontSize: 55,
+    // fontWeight: "500",
+    // color: "#0a9484",
+    // position: "absolute",
+    // textAlign: "center",
+    // alignItems:'center',
+    // left: I18nManager.isRTL ? '15%' : '50%',
+    // // transform: [{ translateX: I18nManager.isRTL ? 0 : -100 }],
+    // // transform: [{ translateX: -50 }, { translateY: 85 }],
+    // transform: [{ translateX: I18nManager.isRTL ? -50 : 0 }, { translateY: I18nManager.isRTL ? 80 :  85 }],
+    // alignSelf: "center",
+    position: 'absolute',
     fontWeight: "500",
-    color: "#0a9484",
-    position: "absolute",
-    transform: [{ translateX: -50 }, { translateY: 85 }],
-    alignSelf: "center",
+    left: 0,
+    right: 0,
+    top: 150,
+    textAlign: 'center',
+    transform: [{ translateY: -70 },],
+    color:'#0a9484',
+    fontSize: 55,
   },
   centeredView: {
     flex: 1,

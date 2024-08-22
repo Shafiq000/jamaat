@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, Image, TextInput, Pressable, Alert, ScrollView,ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, Image, TextInput, Pressable, Alert, ScrollView,ActivityIndicator,I18nManager } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { useAuthContext } from '../../../Navigations/AuthContext';
+import { useTranslation } from "react-i18next";
 
 const EmailSignUp = ({ navigation }) => {
   const [valueMail, setValueMail] = useState('');
@@ -19,6 +20,7 @@ const EmailSignUp = ({ navigation }) => {
   const [confrmpassword, setConfrmPassword] = useState('');
   const { signUpWithEmail, signInWithGoogle, facebookSignIn, user,themeMode } = useAuthContext();
   const [loading, setLoading] = useState();
+  const { t } = useTranslation();
 
   useEffect(() => {
     GoogleSignin.configure({ webClientId: '783668382478-0tvj9ga3j9kis2129pb686rcrf925o7t.apps.googleusercontent.com' });
@@ -113,11 +115,11 @@ const EmailSignUp = ({ navigation }) => {
          <ActivityIndicator size="large" color="#0a9484" />
       ):(
         <>
-        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ flexGrow: 1 }}>
         <View style={{ flexDirection: 'column', justifyContent: 'center', paddingVertical: 10 }}>
           <View style={{ justifyContent: 'center', paddingHorizontal: 10 }}>
             <View style={{ paddingHorizontal: 17, paddingVertical: 10 }}>
-              <Text style={[themeMode === "dark" && { color: '#fff' }]}>Name:</Text>
+              <Text style={[themeMode === "dark" && { color: '#fff' }]}>{t('fullname')}:</Text>
             </View>
             <TextInput
               style={[
@@ -127,7 +129,7 @@ const EmailSignUp = ({ navigation }) => {
               ]}
               value={name}
               onChangeText={setName}
-              placeholder='Enter full name'
+              placeholder={t('fullname')}
               placeholderTextColor={themeMode === "dark" ? '#fff' : '#AAAAAA'}
               onFocus={() => setNameInputFocused(true)}
               onBlur={() => setNameInputFocused(false)}
@@ -135,7 +137,7 @@ const EmailSignUp = ({ navigation }) => {
           </View>
           <View style={{ justifyContent: 'center', paddingHorizontal: 10 }}>
             <View style={{ paddingHorizontal: 17, paddingVertical: 10 }}>
-              <Text style={[themeMode === "dark" && { color: '#fff' }]}>Email:</Text>
+              <Text style={[themeMode === "dark" && { color: '#fff' }]}>{t('email')}:</Text>
             </View>
             <TextInput
               style={[
@@ -153,7 +155,7 @@ const EmailSignUp = ({ navigation }) => {
           </View>
           <View style={{ justifyContent: 'center' }}>
             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical: 10, paddingHorizontal: 25 }}>
-              <Text style={[themeMode === "dark" && { color: '#fff' }]}>Password:</Text>
+              <Text style={[themeMode === "dark" && { color: '#fff' }]}>{t('password')}:</Text>
             </View>
             <TextInput
               secureTextEntry={passwordVisibility}
@@ -164,7 +166,7 @@ const EmailSignUp = ({ navigation }) => {
               ]}
               value={valuePswrd}
               onChangeText={setValuePswrd}
-              placeholder='type your password'
+              placeholder={t('type_password')}
               placeholderTextColor={themeMode === "dark" ? '#fff' : '#AAAAAA'}
               onFocus={() => setPswrdInputFocused(true)}
               onBlur={() => setPswrdInputFocused(false)}
@@ -175,18 +177,19 @@ const EmailSignUp = ({ navigation }) => {
           </View>
           <View style={{ justifyContent: 'center', paddingVertical: 5 }}>
             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical: 10, paddingHorizontal: 25 }}>
-              <Text style={[themeMode === "dark" && { color: '#fff' }]}>Confirm Password:</Text>
+              <Text style={[themeMode === "dark" && { color: '#fff' }]}>{t('confirm_password')}:</Text>
             </View>
             <TextInput
               secureTextEntry={confrmpasswordVisibility}
               style={[
                 styles.inputPassword,
+                { marginLeft: I18nManager.isRTL ? 25 : '7%' },
                 isPswrdConfrmInputFocused && { borderColor: themeMode === "dark" ? '#fff' : '#000' },
                 { color: themeMode === "dark" ? '#fff' : '#000' }
               ]}
               value={confrmpassword}
               onChangeText={setConfrmPassword}
-              placeholder='type your password'
+              placeholder={t('confirm_password')}
               placeholderTextColor={themeMode === "dark" ? '#fff' : '#AAAAAA'}
               onFocus={() => setPswrdConfrmInputFocused(true)}
               onBlur={() => setPswrdConfrmInputFocused(false)}
@@ -197,18 +200,18 @@ const EmailSignUp = ({ navigation }) => {
           </View>
           <View style={{ alignItems: 'center', justifyContent: 'center', paddingVertical: 40 }}>
             <Pressable onPress={createUser} style={[{ height: 40, width: '87%', backgroundColor: '#000', justifyContent: 'center', borderRadius: 5 },themeMode === 'dark' && {backgroundColor:'#fff'}]}>
-              <Text style={[{ color: '#fff', textAlign: 'center', fontSize: 15, fontWeight: '700' },themeMode === "dark" && { color: '#000' }]}>Sign Up</Text>
+              <Text style={[{ color: '#fff', textAlign: 'center', fontSize: 15, fontWeight: '700' },themeMode === "dark" && { color: '#000' }]}>{t('sign_up')}</Text>
             </Pressable>
           </View>
           <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', paddingVertical: 10 }}>
-            <Text style={[themeMode === "dark" && { color: '#fff' }]}>Already have an account? </Text>
+            <Text style={[themeMode === "dark" && { color: '#fff' }]}>{t('already_account')}</Text>
             <Pressable onPress={handleToLogin}>
-              <Text style={[{ fontSize: 15, fontWeight: '700' }, themeMode === "dark" && { color: '#fff' }]}>Log In</Text>
+              <Text style={[{ fontSize: 15, fontWeight: '700' }, themeMode === "dark" && { color: '#fff' }]}>{t('log_in')}</Text>
             </Pressable>
           </View>
           <View style={{ alignItems: 'center', justifyContent: 'center', flexDirection: 'row', paddingHorizontal: 50, gap: 10 }}>
             <View style={{ borderBottomColor: '#AAAAAA', borderBottomWidth: 1, height: 5, width: 80 }}></View>
-            <Text style={[themeMode === "dark" && { color: '#fff' }]}> or </Text>
+            <Text style={[themeMode === "dark" && { color: '#fff' }]}> {t('or')} </Text>
             <View style={{ borderBottomColor: '#AAAAAA', borderBottomWidth: 1, height: 5, width: 80 }}></View>
           </View>
           <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingVertical: 20, gap: 20 }}>
@@ -242,6 +245,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingLeft: 10,
     borderColor: '#AAAAAA',
+    textAlign:I18nManager.isRTL ? 'right' :'left'
   },
   inputPassword: {
     height: 40,
@@ -251,5 +255,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingLeft: 10,
     borderColor: '#AAAAAA',
+    textAlign:I18nManager.isRTL ? 'right' :'left'
+
   },
 });

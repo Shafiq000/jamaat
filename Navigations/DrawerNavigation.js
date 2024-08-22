@@ -5,10 +5,13 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import BottomTabNavigation from './BottomTabNavigation';
 import CustomDrawer from '../Components/CustomDrawer';
 import { useAuthContext } from './AuthContext';
+import { useTranslation } from "react-i18next";
+
 const Drawer = createDrawerNavigator();
 
 const DrawerNavigation = ({ navigation }) => {
   const { user, isAuthenticated } = useAuthContext();
+  const { t } = useTranslation();
 
   return (
     <Drawer.Navigator
@@ -19,8 +22,8 @@ const DrawerNavigation = ({ navigation }) => {
         <SafeAreaView style={{ flex: 1 }}>
           <View style={styles.mainContainer}>
             <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-              <Image source={require('../src/Images/masjid.png')} style={styles.image} />
-              <Text style={styles.title}>Masjid</Text>
+              <Image source={require('../src/Images/jmat.png')} style={styles.image} />
+              <Text style={styles.title}>Jamaat</Text>
             </View>
             <View style={styles.authContainer}>
               {isAuthenticated && user ? (
@@ -32,13 +35,13 @@ const DrawerNavigation = ({ navigation }) => {
                 <>
                   <Pressable hitSlop={20} onPress={() => navigation.navigate('Login')}>
                     <View style={styles.logContainer}>
-                      <Text style={styles.logText}>Login</Text>
+                      <Text style={styles.logText}>{t('log_in')}</Text>
                     </View>
                   </Pressable>
-                  <Text style={styles.orText}>or</Text>
+                  <Text style={styles.orText}>{t('or')}</Text>
                   <Pressable hitSlop={20} onPress={() => navigation.navigate('SignUp')}>
                     <View style={styles.regContainer}>
-                      <Text style={styles.regText}>Sign Up</Text>
+                      <Text style={styles.regText}>{t('sign_up')}</Text>
                     </View>
                   </Pressable>
                 </>
@@ -66,10 +69,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#0a9484',
   },
   image: {
-    height: 90,
-    width: 80,
+    height: 70,
+    width: 60,
     borderRadius: 10,
-    backgroundColor: 'red',
+    // backgroundColor: 'red',
+    tintColor:'#fff'
   },
   title: {
     fontSize: 17,

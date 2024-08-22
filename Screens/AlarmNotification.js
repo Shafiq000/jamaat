@@ -5,6 +5,7 @@ import Sound from 'react-native-sound';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAuthContext } from '../Navigations/AuthContext';
 import HeaderBack from '../Components/HeaderBack';
+import { useTranslation } from "react-i18next";
 
 const AlarmNotification = ({ navigation, route }) => {
     const { alarmTime } = route?.params ?? { alarmTime: { hours: 19, minutes: 0 } }; // Default to 7:00 PM
@@ -13,6 +14,7 @@ const AlarmNotification = ({ navigation, route }) => {
     const [sound, setSound] = useState(null);
     const [hasPlayed, setHasPlayed] = useState(false); // To track if the sound has played for the current minute
     const { themeMode } = useAuthContext();
+    const { t } = useTranslation();
 
     console.log("alarmTime", alarmTime);
 
@@ -114,10 +116,10 @@ const AlarmNotification = ({ navigation, route }) => {
 
     return (
         <SafeAreaView style={[styles.container, themeMode === "dark" && { backgroundColor: "#1C1C22", color: "#fff" }]}>
-            <HeaderBack title={'Setting'} navigation={navigation}/>
+            <HeaderBack title={t('notification')} navigation={navigation}/>
             <View style={{ flexDirection: "column" }}>
                 <View style={styles.notifications}>
-                    <Text style={[styles.title, themeMode === "dark" && { color: "#fff" }]}>Show Notifications</Text>
+                    <Text style={[styles.title, themeMode === "dark" && { color: "#fff" }]}>{t('namaz_notification')}</Text>
                     <Switch
                         trackColor={{ false: '#B2B2B2', true: '#5BB5AB' }}
                         thumbColor={isEnabled ? '#0a9484' : '#f4f3f4'}
@@ -134,7 +136,7 @@ const AlarmNotification = ({ navigation, route }) => {
                             <View style={styles.radioContainer}>
                                 <RadioButton.Item
                                     value="Default"
-                                    label="Default"
+                                    label={t('default')}
                                     color="#0a9484"
                                     disabled={!isEnabled}
                                     style={[styles.radioButton, themeMode === "dark" && { color: "#fff" }]}
@@ -150,7 +152,7 @@ const AlarmNotification = ({ navigation, route }) => {
                         >
                             <View style={styles.radioContainer}>
                                 <RadioButton.Item
-                                    label="Adhan"
+                                    label={t('adhan')}
                                     value="Adhan"
                                     color="#0a9484"
                                     disabled={!isEnabled}

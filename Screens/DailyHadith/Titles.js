@@ -4,12 +4,15 @@ import { Searchbar } from 'react-native-paper';
 import HeaderBack from '../../Components/HeaderBack';
 import AllTitles from '../../Jsondata/AllTitles.json'
 import { useAuthContext } from '../../Navigations/AuthContext';
+import { useTranslation } from "react-i18next";
+
 const Titles = ({ navigation, route }) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [filteredTitles, setFilteredTitles] = useState([]);
     const item = route.params?.item;
     const bookId = item?.id;
     const { themeMode } = useAuthContext();
+    const { t } = useTranslation();
 
     useEffect(() => {
         if (bookId) {
@@ -40,7 +43,8 @@ const Titles = ({ navigation, route }) => {
             <Pressable onPress={() => handlePressToDuas(item)}>
                 <View style={[styles.titleItem, themeMode == "dark" && { backgroundColor: "#26272C" }]}>
                     <Text numberOfLines={1} style={[styles.title, themeMode == "dark" && { color: "#fff" }]}>
-                        {index + 1}.  {item.english}
+                        {/* {index + 1}.  {item.english} */}
+                        {`${index + 1}. ${t(`english.${item.english}`)}`}
                     </Text>
                 </View>
             </Pressable>
@@ -49,7 +53,7 @@ const Titles = ({ navigation, route }) => {
 
     return (
         <View style={[styles.container, themeMode == "dark" && { backgroundColor: "#26272C" }]}>
-            <HeaderBack title={item?.english} navigation={navigation} />
+            <HeaderBack title= {t(`book.${item?.english}`)} navigation={navigation} />
             <View style={[styles.searchContainer, themeMode == "dark" && { backgroundColor: "#26272C" }]}>
                 <Searchbar
                     style={[styles.searchBar, themeMode == "dark" && { backgroundColor: "#3F4545" }]}
@@ -60,7 +64,7 @@ const Titles = ({ navigation, route }) => {
                     }, themeMode == "dark" && { color: '#fff' }, themeMode != "dark" && { color: '#000' }]}
 
                     selectionColor={'#0a9484'}
-                    placeholder="Search"
+                    placeholder={t('search')}
                     onChangeText={setSearchQuery}
                     value={searchQuery}
                 />

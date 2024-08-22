@@ -10,6 +10,8 @@ import {
 import { useAuthContext } from "../../Navigations/AuthContext";
 import { Searchbar } from 'react-native-paper';
 import HeaderBack from "../../Components/HeaderBack";
+import { useTranslation } from "react-i18next";
+
 const data = [
   {
     id: 1,
@@ -78,6 +80,8 @@ const NameCard = memo(({ navigation, item }) => {
 
 const AppHomeHadith = ({ navigation }) => {
   const { themeMode } = useAuthContext();
+  const { t } = useTranslation();
+
   const renderItems = useCallback(
     ({ item, index }) => (
       <NameCard
@@ -93,7 +97,7 @@ const AppHomeHadith = ({ navigation }) => {
   };
   return (
     <View style={[{ backgroundColor: '#FFFFFF', flex: 1 }]}>
-      <HeaderBack title={'Jamaat Hadith'} navigation={navigation} />
+      <HeaderBack title={t('hadith')} navigation={navigation} />
       <View style={[styles.searchContainer, themeMode == "dark" && { backgroundColor: "#26272C", borderBottomColor: '#fff', borderWidth: 1 }]}>
         <Pressable onPress={handleSearchPress} style={styles.searchPressable}>
           <Searchbar
@@ -112,7 +116,7 @@ const AppHomeHadith = ({ navigation }) => {
             iconColor={themeMode == "dark" ? "#fff" : "#000"}
             placeholderTextColor={themeMode == "dark" ? "#fff" : "#000"}
             selectionColor={'#0a9484'}
-            placeholder="Search"
+            placeholder={t('search')}
             editable={false}
           />
         </Pressable>

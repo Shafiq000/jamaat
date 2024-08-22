@@ -1,17 +1,19 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { StyleSheet, Text, View, ImageBackground, Pressable } from 'react-native';
+import { StyleSheet, Text, View, ImageBackground, Pressable,Platform } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import allDua from '../../Jsondata/AllHadiths.json';
 import Icon from 'react-native-vector-icons/Ionicons';
 import PlayIcon from 'react-native-vector-icons/Entypo';
 import * as Speech from 'expo-speech';
 import { useNavigation } from '@react-navigation/native';
+import { useTranslation } from "react-i18next";
 
 const DailyHadithOnHome = () => {
     const [currentHadith, setCurrentHadith] = useState(null);
     const [showFullTranslation, setShowFullTranslation] = useState(false);
     const [isPlaying, setIsPlaying] = useState(false);
     const navigation = useNavigation();
+    const { t } = useTranslation();
 
     useEffect(() => {
         fetchRandomHadith();
@@ -80,20 +82,20 @@ const DailyHadithOnHome = () => {
                     <View style={styles.container}>
                         {currentHadith ? (
                             <>
-                                <Text style={styles.title}>Daily Hadith</Text>
+                                <Text style={styles.title}>{t('daily_hadith')}</Text>
                                 <Text numberOfLines={1} ellipsizeMode='tail' style={styles.hadithText}>{currentHadith.english.text}</Text>
                                 <Pressable onPress={toggleShowFullTranslation}>
-                                    <Text style={styles.seeMore}>See More</Text>
+                                    <Text style={styles.seeMore}>{t('see_more')}</Text>
                                 </Pressable>
                                 <View style={styles.translationContainer}>
                                     <View style={styles.iconContainer}>
                                         <Pressable onPress={handlePlayPause} style={styles.icon}>
                                             <PlayIcon name={isPlaying ? "controller-paus" : "controller-play"} size={24} color="#0a9484" />
-                                            <Text style={styles.iconText}>{isPlaying ? "Pause" : "Play"}</Text>
+                                            <Text style={styles.iconText}>{isPlaying ? t('pause') : t('play')}</Text>
                                         </Pressable>
                                         <Pressable onPress={handleShare} style={styles.shareicon}>
                                             <Icon name="share-social" size={24} color="#ffffff" />
-                                            <Text style={{ color: '#fff' }}>Share</Text>
+                                            <Text style={{ color: '#fff' }}>{t('share')}</Text>
                                         </Pressable>
                                     </View>
                                 </View>

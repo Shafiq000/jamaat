@@ -1,4 +1,5 @@
 <resources>
+ <string name="expo_splash_screen_resize_mode" translatable="false">native</string>
     <string name="app_name">Jamaat</string>
     <string name="facebook_app_id">489000913700341</string>
     <string name="fb_login_protocol_scheme">fb1234</string>

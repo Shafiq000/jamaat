@@ -7,6 +7,7 @@ import * as Speech from 'expo-speech';
 import Share from 'react-native-share';
 import { useNavigation } from '@react-navigation/native';
 import duasData from '../../Jsondata/Duas.json';
+import { useTranslation } from "react-i18next";
 
 const DailyDuaOnHome = () => {
   const [verse, setVerse] = useState(null);
@@ -14,6 +15,7 @@ const DailyDuaOnHome = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [showFullTranslation, setShowFullTranslation] = useState(false);
   const navigation = useNavigation();
+  const { t } = useTranslation();
 
   useEffect(() => {
     fetchRandomDua();
@@ -91,7 +93,7 @@ const DailyDuaOnHome = () => {
               <ActivityIndicator size="large" color="#ffffff" />
             ) : (
               <>
-                <Text style={styles.title}>Daily Dua</Text>
+                <Text style={styles.title}>{t('daily_dua')}</Text>
                 {verse && (
                   <View style={styles.verseContainer}>
                     <View style={styles.translationContainer}>
@@ -107,18 +109,18 @@ const DailyDuaOnHome = () => {
                           {verse.translation}
                         </Text>
                         <Pressable onPress={toggleShowFullTranslation}>
-                          <Text style={styles.seeMore}>See More</Text>
+                          <Text style={styles.seeMore}>{t('see_more')}</Text>
                         </Pressable>
                       </View>
                     </View>
                     <View style={styles.iconContainer}>
                       <Pressable onPress={handlePlayPause} style={styles.icon}>
                         <PlayIcon name={isPlaying ? "controller-paus" : "controller-play"} size={24} color="#0a9484" />
-                        <Text style={styles.iconText}>{isPlaying ? "Pause" : "Play"}</Text>
+                        <Text style={styles.iconText}>{isPlaying ? t("pause") :t( "play")}</Text>
                       </Pressable>
                       <Pressable onPress={handleShare} style={styles.shareIcon}>
                         <Icon name="share-social" size={24} color="#ffffff" />
-                        <Text style={{ color: '#fff', marginLeft: 5 }}>Share</Text>
+                        <Text style={{ color: '#fff', marginLeft: 5 }}>{t('share')}</Text>
                       </Pressable>
                     </View>
                   </View>

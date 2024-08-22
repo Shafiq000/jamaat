@@ -1,14 +1,17 @@
-import { ActivityIndicator, StyleSheet, Text, View, FlatList, Pressable, Share } from 'react-native';
+import { ActivityIndicator, StyleSheet, Text, View, FlatList, Pressable, Share,I18nManager } from 'react-native';
 import React, { useState, useEffect, useCallback, memo } from 'react';
 import HeaderBack from '../../Components/HeaderBack';
 import { useAuthContext } from '../../Navigations/AuthContext';
 import RefreshIcon from "react-native-vector-icons/Ionicons";
 import ShareIcon from "react-native-vector-icons/AntDesign";
+import { useTranslation } from "react-i18next";
 
 const DailyVerseScreen = ({ navigation, route }) => {
     const { themeMode } = useAuthContext();
     const [verse, setVerse] = useState(route.params?.verse || null);
     const [loading, setLoading] = useState(!route.params?.verse);
+    const { t } = useTranslation();
+
     const fetchRandomVerse = useCallback(() => {
         setLoading(true);
         fetch('https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/quran_en.json')
@@ -56,8 +59,8 @@ const DailyVerseScreen = ({ navigation, route }) => {
                     <>
                         {verse && (
                             <View style={[styles.hadithContainer, themeMode == "dark" && { backgroundColor: "#26272C" }]}>
-                                <Text style={[styles.arabicText, themeMode == "dark" && { color: "#fff" }]}>{verse.text}</Text>
-                                <Text style={[styles.englishText, themeMode == "dark" && { color: "#fff" }]}>{verse.translation}</Text>
+                                <Text style={[styles.arabicText,{ textAlign: I18nManager.isRTL ? 'left' : 'right' }, themeMode == "dark" && { color: "#fff" }]}>{verse.text}</Text>
+                                <Text style={[styles.englishText,{ textAlign: I18nManager.isRTL ? 'right' : 'left' }, themeMode == "dark" && { color: "#fff" }]}>{verse.translation}</Text>
                                 {/* <Text style={[styles.englishText, themeMode == "dark" && { color: "#fff" }]}>jhjdbhbv{'\n'}jhbhvhj</Text> */}
                             </View>
                         )}
@@ -69,7 +72,7 @@ const DailyVerseScreen = ({ navigation, route }) => {
 
     return (
         <View style={[{ flex: 1 }]}>
-            <HeaderBack title={'Daily Ayah'} navigation={navigation} />
+            <HeaderBack title={t('daily_verse')} navigation={navigation} />
             <View style={[styles.contentContainer, themeMode == "dark" && { backgroundColor: "#26272C" }]}>
                 <FlatList
                     showsVerticalScrollIndicator={false}
@@ -94,7 +97,7 @@ const DailyVerseScreen = ({ navigation, route }) => {
                         size={20}
                         style={[styles.shareIcon, themeMode == "dark" && { color: "#fff" }]}
                     />
-                    <Text style={[{ fontSize: 13, fontWeight: '500', color: '#0a9484', right:5 }, themeMode == "dark" && { color: "#fff" }]}>Share</Text>
+                    <Text style={[{ fontSize: 13, fontWeight: '500', color: '#0a9484', right:5 }, themeMode == "dark" && { color: "#fff" }]}>{t('share')}</Text>
                 </Pressable>
             </View>
         </View>

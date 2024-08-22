@@ -34,6 +34,14 @@ import CalendarMainScreen from '../Screens/Calendar/CalendarMainScreen';
 import DuaMainScreen from '../Screens/Dua/DuaMainScreen';
 import DuaTitles from '../Screens/Dua/TabScreens/CatagoryList/DuaTitles';
 import DuasData from '../Screens/Dua/TabScreens/CatagoryList/components/DuasData';
+import QuestionTitles from '../Screens/Q&A/QuestionTitles';
+import QuestionAnswerScreen from '../Screens/Q&A/QuestionAnswerScreen';
+import RegisterMasjid1 from '../Screens/RegsiterMasjid/RegisterMasjid1';
+import CurrentStep2 from '../Components/MasjidComponents/CurrentStep2';
+import CurrentStep3 from '../Components/MasjidComponents/CurrentStep3';
+import CurrentSteps1 from '../Components/MasjidComponents/CurrentSteps1';
+import MosqueList from '../Components/MosqueList';
+import Test from '../Components/Test';
 const Stack = createNativeStackNavigator();
 
 function AppStack() {
@@ -73,6 +81,14 @@ function AppStack() {
             <Stack.Screen name="DuaMainScreen" component={DuaMainScreen} />
             <Stack.Screen name="DuaTitles" component={DuaTitles} />
             <Stack.Screen name="DuasData" component={DuasData} />
+            <Stack.Screen name="QuestionTitles" component={QuestionTitles} />
+            <Stack.Screen name="QuestionAnswerScreen" component={QuestionAnswerScreen} />
+            <Stack.Screen name="RegisterMasjid1" component={RegisterMasjid1} />
+            <Stack.Screen name="CurrentSteps1" component={CurrentSteps1} />
+            <Stack.Screen name="CurrentStep2" component={CurrentStep2} />
+            <Stack.Screen name="CurrentStep3" component={CurrentStep3} />
+            <Stack.Screen name="MosqueList" component={MosqueList} />
+            <Stack.Screen name="Test" component={Test} />
 
         </Stack.Navigator>
     );

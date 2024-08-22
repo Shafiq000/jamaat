@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, memo } from 'react';
-import { StyleSheet, Text, View, FlatList, Pressable, Clipboard, Share } from 'react-native';
+import { StyleSheet, Text, View, FlatList, I18nManager, Clipboard, Share } from 'react-native';
 import allDua from '../../Jsondata/AllHadiths.json'
 import ToastAndroid from "react-native-root-toast";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -8,11 +8,14 @@ import CopyIcon from "react-native-vector-icons/Feather";
 import ShareIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import { useAuthContext } from '../../Navigations/AuthContext';
 import HeaderBack from '../../Components/HeaderBack';
+import { useTranslation } from "react-i18next";
+
 const Hadiths = ({ navigation, route }) => {
     const [hadithss, setHadithss] = useState([]);
     const [isFavorite, setIsFavorite] = useState([]);
     const { themeMode } = useAuthContext();
     const { item, isfavorite } = route.params;
+    const { t } = useTranslation();
 
     const fetchDuas = async () => {
         const filteredData = allDua.hadiths.filter(
@@ -99,9 +102,9 @@ const Hadiths = ({ navigation, route }) => {
                 <Text style={[styles.title, themeMode == "dark" && { color: "#fff" }]}>
                     {index + 1} {item?.item}
                 </Text>
-                <Text style={[styles.arabicText, themeMode == "dark" && { color: "#fff" }]}>{item.arabic}</Text>
-                <Text style={styles.englishNarrator}>{item.english.narrator}</Text>
-                <Text style={[styles.englishText, themeMode == "dark" && { color: "#fff" }]}>{item.english.text}</Text>
+                <Text style={[styles.arabicText, {textAlign:I18nManager.isRTL ? 'left' : 'right'}, themeMode == "dark" && { color: "#fff" }]}>{item.arabic}</Text>
+                <Text style={[styles.englishNarrator, {textAlign:I18nManager.isRTL ? 'right' : 'left'},]}>{item.english.narrator}</Text>
+                <Text style={[styles.englishText,{textAlign:I18nManager.isRTL ? 'right' : 'left'}, themeMode == "dark" && { color: "#fff" }]}>{item.english.text}</Text>
                 <View style={styles.iconContainer}>
                     <CopyIcon
                         name="copy"
@@ -149,7 +152,7 @@ const Hadiths = ({ navigation, route }) => {
 
     return (
         <View style={[styles.container, themeMode == "dark" && { backgroundColor: "#26272C" }]}>
-            <HeaderBack title={item?.english} navigation={navigation} />
+            <HeaderBack title={t(`english.${item?.english}`)} navigation={navigation} />
             <FlatList
                 data={hadithss}
                 keyExtractor={(item) => item.id.toString()}

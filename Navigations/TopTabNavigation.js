@@ -4,9 +4,12 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import Masjid from '../Components/Masjid';
 import PrayerTime from '../Components/PrayerTime';
 import { useAuthContext } from './AuthContext';
+import { useTranslation } from "react-i18next";
+
 const Tab = createMaterialTopTabNavigator();
 
 const TopTabNavigation = () => {
+  const { t } = useTranslation();
   const { themeMode } = useAuthContext();
 
   return (
@@ -37,7 +40,7 @@ const TopTabNavigation = () => {
         options={{
           tabBarLabel: ({ focused }) => (
             <Text style={{ color: focused ? '#fff' : '#000', backgroundColor: focused ? '#0a9484' : '#EFEFEF', left: 15, padding: 15, height: 50, borderRadius: 10, textAlign: 'center', width: '100%', fontWeight: '600' }}>
-              Iqama Time
+              {t('iqama_time')}
             </Text>
           )
         }}
@@ -48,7 +51,7 @@ const TopTabNavigation = () => {
         options={{
           tabBarLabel: ({ focused }) => (
             <Text style={{ color: focused ? '#fff' : '#000', backgroundColor: focused ? '#0a9484' : '#EFEFEF', padding: 15, height: 50, borderRadius: 10, textAlign: 'center', width: '100%', fontWeight: '600' }}>
-              Prayer Time
+             {t('prayer_time')}
             </Text>
           )
         }}

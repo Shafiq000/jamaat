@@ -4,9 +4,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import HeaderBack from '../Components/HeaderBack';
 import LocIcon from 'react-native-vector-icons/EvilIcons';
 import { useAuthContext } from '../Navigations/AuthContext';
+import { useTranslation } from "react-i18next";
+
 const Sub = ({ navigation }) => {
   const [subMosque, setSubMosque] = useState([]);
   const { themeMode } = useAuthContext();
+  const { t } = useTranslation();
 
   const fetchSubscribedMosques = async () => {
     try {
@@ -30,7 +33,7 @@ const Sub = ({ navigation }) => {
 
   return (
     <View style={[{ flex:1 }]}>
-      <HeaderBack title={'Subscribed Masjids'} navigation={navigation} />
+      <HeaderBack title={t('subscribe_masjid')} navigation={navigation} />
       <ScrollView style={[styles.container,themeMode === "dark" && { backgroundColor: "#1C1C22" }]}>
         {subMosque.length > 0 ? (
           subMosque.map((mosque, index) => (
@@ -49,7 +52,7 @@ const Sub = ({ navigation }) => {
             </View>
           ))
         ) : (
-          <Text style={styles.noSubscriptionText}>No Subscribed Masjids</Text>
+          <Text style={styles.noSubscriptionText}>{t('no_subscribe')}</Text>
         )}
       </ScrollView>
     </View>

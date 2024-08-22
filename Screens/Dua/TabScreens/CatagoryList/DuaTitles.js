@@ -10,23 +10,30 @@ import {
 import LeftAerow from "react-native-vector-icons/Feather";
 import SearchBar from "../../SearchBar";
 import { allTitles } from "./components/DuaAzkarData";
+import { useTranslation } from "react-i18next";
 import { useAuthContext } from "../../../../Navigations/AuthContext";
+import HeaderBack from "../../../../Components/HeaderBack";
+
 const NameCard = memo(({ navigation, item, categoryId }) => {
-  const { themeMode, setThemeMode } = useAuthContext();
+  const { t } = useTranslation();
+  const { themeMode } = useAuthContext();
+
   const handlePress = () => {
     navigation.navigate("DuasData", { item, categoryId });
   };
   return (
     <View style={[styles.bodyContainer, themeMode == "dark" && { backgroundColor: "#000" }]}>
       <Pressable onPress={handlePress}>
-        <Text style={[styles.duaTitle, themeMode == "dark" && { backgroundColor: "#000", color: "#FFFF" }]}>{item.title}</Text>
+        <Text style={[styles.duaTitle, themeMode == "dark" && { backgroundColor: "#000", color: "#FFF" }]}>
+          {t(`title.${item.title}`)}
+        </Text>
       </Pressable>
     </View>
   );
 });
 
 const DuaTitles = ({ navigation, route }) => {
-  const { themeMode, setThemeMode } = useAuthContext();
+  const { themeMode } = useAuthContext();
   const [filteredData, setFilterData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const item = route.params?.item;
@@ -44,8 +51,6 @@ const DuaTitles = ({ navigation, route }) => {
     }
   }, [searchQuery, categoryId, item.id]);
 
-
-
   const renderItems = useCallback(
     ({ item, index }) => (
       <NameCard
@@ -60,15 +65,7 @@ const DuaTitles = ({ navigation, route }) => {
 
   return (
     <SafeAreaView style={[styles.container, themeMode == "dark" && { backgroundColor: "#000" }]}>
-      <View style={styles.mainHeader}>
-        <Pressable onPress={() => navigation.goBack()}>
-          <LeftAerow name="chevron-left" size={25} color={'#fff'} />
-        </Pressable>
-        <View style={styles.mainText}>
-          <Text style={styles.headerText}>{item.title}</Text>
-        </View>
-      </View>
-
+      <HeaderBack title={item.title} navigation={navigation}/>
       <SearchBar setSearchQuery={setSearchQuery} />
       <FlatList
         showsVerticalScrollIndicator={false}
@@ -106,7 +103,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-
   },
   bodyContainer: {
     borderTopColor: "#cbcbcb",
@@ -116,6 +112,6 @@ const styles = StyleSheet.create({
   duaTitle: {
     marginLeft: 15,
     fontSize: 15,
-    fontWeight: '600',
+    fontWeight: "600",
   },
 });

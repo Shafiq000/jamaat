@@ -1,41 +1,79 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, ScrollView, Image, Pressable, PermissionsAndroid } from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
-import mosques from '../Jsondata/Mosques.json';
 import haversine from 'haversine';
 import LocIcon from 'react-native-vector-icons/EvilIcons';
 import { useAuthContext } from '../Navigations/AuthContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import mosquesJson from '../Jsondata/Mosques.json';
+
 const Allmosques = ({ navigation }) => {
   const [currentLocation, setCurrentLocation] = useState(null);
   const { themeMode } = useAuthContext();
+  const [mosquesData, setMosquesData] = useState([]);
+
 
   useEffect(() => {
-    const requestLocationPermission = async () => {
-      try {
-        const granted = await PermissionsAndroid.request(
-          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-          {
-            title: 'Location Permission',
-            message: 'This app needs access to your location.',
-            buttonNeutral: 'Ask Me Later',
-            buttonNegative: 'Cancel',
-            buttonPositive: 'OK',
-          }
-        );
-        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-          console.log('You can use the location');
-        } else {
-          console.log('Location permission denied');
-        }
-      } catch (err) {
-        console.warn(err);
-      }
-    };
-    getCurrentLocation();
+    getMosquesData();
     requestLocationPermission();
+    getCurrentLocation();
   }, []);
 
-  const getCurrentLocation = () =>{
+  const ensureUniqueIds = (data) => {
+    const seenIds = new Set();
+    return data.map(item => {
+      while (seenIds.has(item.id)) {
+        item.id += 'x';
+      }
+      seenIds.add(item.id);
+      return item;
+    });
+  };
+
+  const getMosquesData = async () => {
+    try {
+      const storedData = await AsyncStorage.getItem('allMosquesData');
+      let combinedData = mosquesJson.data;
+      console.log("storedData", storedData);
+
+      if (storedData) {
+        const parsedStoredData = JSON.parse(storedData);
+        console.log('Parsed Stored Data:',JSON.stringify(parsedStoredData,2,null));
+        combinedData = [...combinedData, ...parsedStoredData];
+      }
+
+      combinedData = ensureUniqueIds(combinedData);
+      // console.log('Combined Data:', combinedData);
+      setMosquesData(combinedData);
+    } catch (error) {
+      console.error('Failed to load mosques data', error);
+    }
+  };
+
+  const requestLocationPermission = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        {
+          title: 'Location Permission',
+          message: 'This app needs access to your location.',
+          buttonNeutral: 'Ask Me Later',
+          buttonNegative: 'Cancel',
+          buttonPositive: 'OK',
+        }
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        console.log('You can use the location');
+        getCurrentLocation();
+      } else {
+        console.log('Location permission denied');
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  };
+
+  const getCurrentLocation = () => {
     Geolocation.getCurrentPosition(
       (position) => setCurrentLocation({
         latitude: position.coords.latitude,
@@ -49,7 +87,10 @@ const Allmosques = ({ navigation }) => {
         timeout: 10000,
       }
     );
-  }
+  };
+
+
+
 
   const calculateDistance = (lat1, lon1, lat2, lon2) => {
     const start = { latitude: parseFloat(lat1), longitude: parseFloat(lon1) };
@@ -77,19 +118,31 @@ const Allmosques = ({ navigation }) => {
       }
     }
 
+    const imageUri = item.mosque.image;
+    // console.log('Item:', item); 
+    // console.log('Image URI:', imageUri); 
+
     return (
       <Pressable
         key={item.id}
-        style={[styles.itemContainer,themeMode === "dark" && { backgroundColor: "#1C1C22" }]}
+        style={[styles.itemContainer, themeMode === "dark" && { backgroundColor: "#1C1C22" }]}
         onPress={() => navigation.navigate('MasjidDetails', { itemId: item.id })}
       >
-        <Image source={{ uri: item.mosque.image }} style={styles.image} />
+        {imageUri ? (
+          <Image
+            source={{ uri: imageUri }}
+            style={styles.image}
+            onError={() => console.log('Image load error')}
+          />
+        ) : (
+          <View style={styles.image} />
+        )}
         <View style={styles.overlay} />
         <View style={styles.textContainer}>
           <Text style={styles.title}>{item.mosque.title}</Text>
           <View style={{ flexDirection: 'row' }}>
             <LocIcon name='location' size={22} color={'#fff'} />
-            <Text style={styles.address}>{item.mosque.location.address}</Text>
+            <Text numberOfLines={1} style={styles.address}>{item.mosque.location.address}</Text>
           </View>
         </View>
         <View style={styles.distanceContainer}>
@@ -99,14 +152,17 @@ const Allmosques = ({ navigation }) => {
     );
   };
 
+
+
+
   return (
-    <View style={[styles.container,themeMode === "dark" && { backgroundColor: "#1C1C22" }]}>
+    <View style={[styles.container, themeMode === "dark" && { backgroundColor: "#1C1C22" }]}>
       <ScrollView
         horizontal={true}
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.list}
       >
-        {mosques.data.map((item) => (
+        {mosquesData && mosquesData.map((item) => (
           renderItem({ item })
         ))}
       </ScrollView>

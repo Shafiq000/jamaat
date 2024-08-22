@@ -9,11 +9,17 @@ import {
   FlatList,
   Dimensions,
   TouchableOpacity,
+  Platform,
+  I18nManager
 } from "react-native";
 import { useAuthContext } from "../../Navigations/AuthContext";
+import * as Speech from 'expo-speech';
 const windowWidth = Dimensions.get("window").width;
 import { sound } from "../AsmaUlHusna/HomeAsmaUlHusna";
 import HeaderBack from "../../Components/HeaderBack";
+import PlayIcon from 'react-native-vector-icons/Entypo';
+import { useTranslation } from "react-i18next";
+
 const NAME_SEEK_TIME = {
   0: 11000,
   1: 13000,
@@ -116,7 +122,7 @@ const NAME_SEEK_TIME = {
   98: 156100,
   99: 158000,
 };
- const NAME_PLAY_TIME = {
+const NAME_PLAY_TIME = {
   0: 1200,
   1: 1500,
   2: 1400,
@@ -821,28 +827,43 @@ const data = [
 ];
 const delay = (time) => new Promise((resolve) => setTimeout(resolve, time));
 
-const NameCard = memo(({ item }) => {
+
+
+const NameCard = memo(({ item, route }) => {
   const { themeMode, setThemeMode } = useAuthContext();
+  // const index = route.params?.index;
   return (
     <View style={styles.mainContainer}>
-      <View style={{ flexDirection: "row", alignSelf: "center" }}>
+      <View style={{ flexDirection: I18nManager.isRTL ? "row-reverse" : "row", alignSelf: "center" }}>
         <Text
           style={[
             styles.counterText,
+            { textAlign: I18nManager.isRTL ? 'left' : 'right' },
             themeMode === "dark" && { color: "#FFF" },
           ]}
         >
-          {item.id}/
+          {item.id}
         </Text>
         <Text
           style={[
             styles.counterText,
+            { textAlign: I18nManager.isRTL ? 'left' : 'right' },
+            themeMode === "dark" && { color: "#FFF" },
+          ]}
+        >
+          /
+        </Text>
+        <Text
+          style={[
+            styles.counterText,
+            { textAlign: I18nManager.isRTL ? 'left' : 'right' },
             themeMode === "dark" && { color: "#FFF" },
           ]}
         >
           {data.length}
         </Text>
       </View>
+
       <Text
         style={[styles.subtitle, themeMode === "dark" && { color: "#FFF" }]}
       >
@@ -850,7 +871,7 @@ const NameCard = memo(({ item }) => {
       </Text>
 
       <Text
-        style={[styles.title, themeMode === "dark" && { color: "#FFF" }]}
+        style={[styles.title, themeMode === "dark" && { color: "#0a9484" }]}
       >
         {item.title}
       </Text>
@@ -868,7 +889,9 @@ const NameCard = memo(({ item }) => {
       >
         {item.description}
       </Text>
+
     </View>
+
   );
 });
 const TextScrol = ({ navigation, route }) => {
@@ -877,24 +900,27 @@ const TextScrol = ({ navigation, route }) => {
   const [currentIndex, setCurrentIndex] = useState(index);
   const { themeMode, isAutoPlayActive, setIsAutoPlayActive } = useAuthContext();
   const flatListRef = useRef();
+  const [isPlaying, setIsPlaying] = useState(false);
+  const { t } = useTranslation();
+
   const handleScroll = (event) => {
     const offsetX = event.nativeEvent.contentOffset.x;
     const itemIndex = Math.ceil(offsetX / windowWidth);
     if (itemIndex == currentIndex) {
       return;
     }
-   
+
   };
-  
+
   useEffect(() => {
     if (!isAutoPlayActive) {
       return;
     }
     handleAutoPlay();
-  }, );
+  },);
 
   const handleAutoPlay = async () => {
-    
+
     if (currentIndex >= 99) {
       sound.stop();
       return;
@@ -906,7 +932,7 @@ const TextScrol = ({ navigation, route }) => {
       index: currentIndex,
       animated: true,
     });
-   
+
 
     await delay(NAME_PLAY_TIME[currentIndex]);
     setCurrentIndex(currentIndex + 1);
@@ -922,19 +948,46 @@ const TextScrol = ({ navigation, route }) => {
   };
   const renderItems = useCallback(
     ({ item, index }) => (
-      <NameCard navigation={navigation} item={item} index={index} />
+      <View>
+        <NameCard navigation={navigation} item={item} index={index} />
+        <Pressable onPress={() => handlePlayPause(item)} style={styles.icon}>
+          <PlayIcon name={isPlaying ? "controller-paus" : "controller-play"} size={40} color="#0a9484" />
+        </Pressable>
+      </View>
     ),
-    [navigation]
+    [navigation, isPlaying]
   );
+  
+  const handlePlayPause = (item) => {
+    if (item) {
+      if (isPlaying) {
+        Speech.stop();
+        setIsPlaying(false);
+      } else {
+        const SpeechOptions = {
+          voice: Platform.OS === 'ios' ? 'com.apple.ttsbundle.siri_male_en-US_compact' : 'en_us_male',
+          pitch: 1.0,
+          rate: 1.0,
+          language: 'ar-SA',
+          onStart: () => setIsPlaying(true),
+          onDone: () => setIsPlaying(false),
+          onStopped: () => setIsPlaying(false),
+        };
+
+        Speech.speak(item.title, SpeechOptions);
+      }
+    }
+  };
+
 
 
   return (
-    <SafeAreaView style={[styles.container,themeMode === "dark" && { backgroundColor: "black" }, ]}>
-      <HeaderBack title={'99 Names of Allah'} navigation={navigation}/>
+    <SafeAreaView style={[styles.container, themeMode === "dark" && { backgroundColor: "black" },]}>
+      <HeaderBack title={t('allah_name_99')} navigation={navigation} />
       <View style={styles.playBtn}>
         <TouchableOpacity onPress={autoPlayToggal}>
-          <Text style={[styles.autoBtn, themeMode == "dark" && { color: "#FFF", fontWeight:"600", fontSize:18 }]}>
-            Auto Play: {isAutoPlayActive ? "ON" : "OFF"}
+          <Text style={[styles.autoBtn, themeMode == "dark" && { color: "#FFF", fontWeight: "600", fontSize: 18 }]}>
+            {t('auto_play')}: {isAutoPlayActive ? t("on") : t("off")}
           </Text>
         </TouchableOpacity>
       </View>
@@ -954,6 +1007,11 @@ const TextScrol = ({ navigation, route }) => {
         onScroll={handleScroll}
         keyExtractor={(item) => item.id}
       />
+
+      {/* <Pressable onPress={() => handlePlayPause(item)} style={styles.icon}>
+        <PlayIcon name={isPlaying ? "controller-paus" : "controller-play"} size={40} color="#0a9484" />
+      </Pressable> */}
+
     </SafeAreaView>
   );
 };
@@ -1034,5 +1092,15 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     textAlign: "center",
   },
-
+  icon: {
+    top: 40,
+    justifyContent: 'center',
+    flexDirection: 'row', // Align icon and text horizontally
+    alignItems: 'center',
+    // marginLeft: 15, // Space between icons
+  },
+  iconText: {
+    color: '#ffffff',
+    // marginRight: 15,
+  },
 });

@@ -5,6 +5,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import AuthContextProvider from "./Navigations/AuthContext";
 import AppStack from './Navigations/AppStack';
 import AuthProvider from './Navigations/AuthContext';
+import "./Constants/IMLocalize";
 export default function App() {
   return (
     <AuthProvider>

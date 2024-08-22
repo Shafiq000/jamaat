@@ -6,6 +6,7 @@ import PlayIcon from 'react-native-vector-icons/Entypo';
 import * as Speech from 'expo-speech';
 import Share from 'react-native-share';
 import { useNavigation } from '@react-navigation/native';
+import { useTranslation } from "react-i18next";
 
 const data = [
     {
@@ -614,6 +615,7 @@ const AllahNames = () => {
     const [loading, setLoading] = useState(true);
     const [isPlaying, setIsPlaying] = useState(false);
     const navigation = useNavigation();
+    const { t } = useTranslation();
 
     useEffect(() => {
         // Select a random verse from the custom data array
@@ -677,13 +679,13 @@ const AllahNames = () => {
                             <ActivityIndicator size="large" color="#ffffff" />
                         ) : (
                             <>
-                                <Text style={styles.title}>Names of Allah</Text>
+                                <Text style={styles.title}>{t('allah_name')}</Text>
                                 {verse && (
                                     <View style={styles.verseContainer}>
                                         <Text style={styles.verseText}>{verse.title}</Text>
                                         <View style={styles.translationContainer}>
                                             <View style={{ flexDirection: 'column' }}>
-                                                <Text style={styles.verseTextSub}>{verse.subtitle}</Text>
+                                                <Text style={styles.verseTextSub}>{verse.title}</Text>
                                                 <Text style={styles.verseTranslation}>{verse.description}</Text>
                                             </View>
                                         </View>
@@ -691,11 +693,11 @@ const AllahNames = () => {
                                             <View style={styles.iconContainer}>
                                                 <Pressable onPress={handlePlayPause} style={styles.icon}>
                                                     <PlayIcon name={isPlaying ? "controller-paus" : "controller-play"} size={24} color="#0a9484" />
-                                                    <Text style={styles.iconText}>{isPlaying ? "Pause" : "Play"}</Text>
+                                                    <Text style={styles.iconText}>{isPlaying ? t("pause") : t("play")}</Text>
                                                 </Pressable>
                                                 <Pressable onPress={handleShare} style={styles.shareicon}>
                                                     <Icon name="share-social" size={24} color="#ffffff" />
-                                                    <Text style={{ color: '#fff' }}>Share</Text>
+                                                    <Text style={{ color: '#fff' }}>{t('share')}</Text>
                                                 </Pressable>
                                             </View>
                                         </View>

@@ -25,11 +25,6 @@ export const allTitles = [
     title: "Upon experience unrest, fear, apprehensiveness during sleep",
   },
   {
-    id: 6,
-    category_id: 2,
-    title: "Upon experience unrest, fear, apprehensiveness during sleep",
-  },
-  {
     id: 1,
     category_id: 3,
     title: "When starting ablution",
@@ -39,19 +34,16 @@ export const allTitles = [
     id: 2,
     category_id: 3,
     title: "Upon completing the ablution",
-    link: "DetailsScreen",
   },
   {
     id: 3,
     category_id: 3,
     title: "When going to the mosque",
-    link: "DetailsScreen",
   },
   {
     id: 4,
     category_id: 3,
     title: "Upon entering the mosque",
-    link: "DetailsScreen",
   },
   {
     id: 5,
@@ -192,7 +184,7 @@ export const allTitles = [
   {
     id: 6,
     category_id: 5,
-    title: "Remembrance at Muzadalifa ",
+    title: "Remembrance at Muzadalifa",
   },
   {
     id: 7,

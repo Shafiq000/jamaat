@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Pressable, StyleSheet, Text, TextInput, View, Alert } from 'react-native';
+import { Pressable, StyleSheet, Text, TextInput, View, Alert,I18nManager } from 'react-native';
 import HeaderBack from '../Components/HeaderBack';
 import { useAuthContext } from '../Navigations/AuthContext';
+import { useTranslation } from "react-i18next";
 
 const Fullname = ({ navigation }) => {
     const { user, updateUserProfile, themeMode } = useAuthContext();
     const [isNameInputFocused, setNameInputFocused] = useState(false);
     const [name, setName] = useState(user?.displayName || '');
+    const { t } = useTranslation();
 
     useEffect(() => {
         // Ensure the local name state matches the context user displayName
@@ -27,9 +29,9 @@ const Fullname = ({ navigation }) => {
 
     return (
         <View style={[styles.container, themeMode === "dark" && styles.darkContainer]}>
-            <HeaderBack title={'Fullname'} navigation={navigation} />
+            <HeaderBack title={t('fullname')} navigation={navigation} />
             <View style={styles.inputContainer}>
-                <Text style={[styles.nameStyle, themeMode === "dark" && styles.darkText]}>Name</Text>
+                <Text style={[styles.nameStyle, themeMode === "dark" && styles.darkText]}>{t('fullname')}</Text>
                 <TextInput
                     value={name}
                     onChangeText={setName}
@@ -51,7 +53,7 @@ const Fullname = ({ navigation }) => {
                     style={[styles.saveButton,themeMode === "dark" && { backgroundColor: "#fff" }]}
                     onPress={handleSave}
                 >
-                    <Text style={[styles.saveButtonText,themeMode === "dark" && {color:'#000' }]}>Save</Text>
+                    <Text style={[styles.saveButtonText,themeMode === "dark" && {color:'#000' }]}>{t('save_button')}</Text>
                 </Pressable>
             </View>
         </View>
@@ -88,6 +90,9 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         paddingLeft: 10,
         color: '#000000',
+        paddingHorizontal:10
+        // textAlign:'right'
+        
     },
     darkTextInput: {
         backgroundColor: '#363B33',

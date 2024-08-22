@@ -12,4 +12,8 @@
   <style name="Theme.App.SplashScreen" parent="AppTheme">
     <item name="android:windowBackground">@drawable/splashscreen</item>
   </style>
+  <style name="DatePickerTheme" parent="DatePickerBaseTheme">
+   <item name="android:colorControlNormal">#0a9484</item>
+   <item name="colorAccent">#0a9484</item>
+</style>
 </resources>

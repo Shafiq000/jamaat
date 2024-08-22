@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View,ScrollView } from 'react-native';
+import { StyleSheet, Text, View,ScrollView,I18nManager } from 'react-native';
 import React from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import EmailSignUp from '../Components/Auth/SignUp/EmailSignUp';
@@ -7,11 +7,13 @@ import MosqueIcon from 'react-native-vector-icons/FontAwesome5';
 import EmailIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import PhoneIcon from 'react-native-vector-icons/FontAwesome';
 import { useAuthContext } from '../Navigations/AuthContext';
+import { useTranslation } from "react-i18next";
 
 const Tab = createMaterialTopTabNavigator();
 
 const SignUp = () => {
     const { themeMode } = useAuthContext();
+    const { t } = useTranslation();
 
     return (
         <ScrollView style={[
@@ -24,8 +26,8 @@ const SignUp = () => {
                     <Text style={[
                         { fontSize: 25, fontWeight: '800' },
                         themeMode === "dark" && { color: '#fff' }
-                    ]}>Let's Get Started</Text>
-                    <Text style={themeMode === "dark" && { color: '#AAAAAA' }}>Sign up for your account</Text>
+                    ]}>{t('get_start')}</Text>
+                    <Text style={themeMode === "dark" && { color: '#AAAAAA' }}>{t('signup_account')}</Text>
                 </View>
             </View>
             <Tab.Navigator
@@ -57,7 +59,7 @@ const SignUp = () => {
                                     { textAlign: 'center', fontSize: 20, fontWeight: '600' },
                                     { color: focused ? (themeMode === "dark" ? '#fff' : '#000') : '#AAAAAA' }
                                 ]}>
-                                    Email
+                                    {t('email')}
                                 </Text>
                             </View>
                         )
@@ -78,7 +80,7 @@ const SignUp = () => {
                                     { textAlign: 'center', fontSize: 20, fontWeight: '600' },
                                     { color: focused ? (themeMode === "dark" ? '#fff' : '#000') : '#AAAAAA' }
                                 ]}>
-                                    Phone
+                                     {t('phone')}
                                 </Text>
                             </View>
                         )

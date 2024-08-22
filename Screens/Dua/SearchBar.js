@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { StyleSheet, TextInput, View, Image, Pressable } from "react-native";
+import { useTranslation } from "react-i18next";
 
 const SearchBar = ({ setSearchQuery }) => {
   const [searchText, setSearchText] = useState("");
+  const { t } = useTranslation();
 
   const handleSearch = (text) => {
     setSearchText(text);
@@ -24,7 +26,7 @@ const SearchBar = ({ setSearchQuery }) => {
           />
         </Pressable>
         <TextInput
-          placeholder="Search for an answer"
+          placeholder={t('search_answer')}
           selectionColor={"#0a9484"}
           style={styles.input}
           onChangeText={handleSearch}

@@ -7,6 +7,8 @@ import ShareIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import HeaderBack from '../../Components/HeaderBack';
 import { Searchbar } from 'react-native-paper';
 import { useAuthContext } from '../../Navigations/AuthContext';
+import { useTranslation } from "react-i18next";
+
 import _ from 'lodash';
 const SearchHadith = ({ navigation }) => {
   const [hadithss, setHadithss] = useState([]);
@@ -15,6 +17,7 @@ const SearchHadith = ({ navigation }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [chapterId, setChapterId] = useState(null);
   const [bookId, setBookId] = useState(null);
+  const { t } = useTranslation();
 
   const fetchDuas = async () => {
     setHadithss(allDua.hadiths);
@@ -107,7 +110,7 @@ const SearchHadith = ({ navigation }) => {
 
   return (
     <View style={[styles.container, themeMode == "dark" && { backgroundColor: "#26272C" }]}>
-      <HeaderBack title={'Search Hadith'} navigation={navigation} />
+      <HeaderBack title={t('search_hadith')} navigation={navigation} />
       <View style={[styles.searchContainer, themeMode == "dark" && { backgroundColor: "#26272C" }]}>
         <Searchbar
           style={[{
@@ -126,7 +129,7 @@ const SearchHadith = ({ navigation }) => {
           placeholderTextColor={themeMode == "dark" ? "#fff" : "#000"}
           autoFocus
           selectionColor={'#0a9484'}
-          placeholder="Search"
+          placeholder={t('search')}
           onChangeText={handleChange}
           value={searchQuery}
         />

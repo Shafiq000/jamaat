@@ -2,11 +2,14 @@ import { StyleSheet, Text, View } from 'react-native';
 import React, { useState, useEffect, memo } from 'react';
 import moment from 'moment';
 import { useAuthContext } from '../../Navigations/AuthContext';
+import { useTranslation } from "react-i18next";
+
 const PrayerTime = () => {
   const [nextPrayer, setNextPrayer] = useState({ name: '', time: '' });
   const [remainingTime, setRemainingTime] = useState('');
   const [intervalId, setIntervalId] = useState(null); // Define intervalId state
   const { themeMode } = useAuthContext();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -121,10 +124,10 @@ const PrayerTime = () => {
   return (
     <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 30 }}>
       <View style={[styles.mainContainer, themeMode === "dark" && { backgroundColor: "#1C1C22", borderColor: "#fff" }]}>
-        <Text style={[styles.prayerTime, themeMode === "dark" && { color: "#fff" }]}>Next Prayer</Text>
+        <Text style={[styles.prayerTime, themeMode === "dark" && { color: "#fff" }]}>{t('next_jamaat')}</Text>
         <View style={{ flex: 1, justifyContent: 'center', paddingHorizontal: 15 }}>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Text style={[{ fontSize: 20, textAlign: 'left', bottom: 15 }, themeMode === "dark" && { color: "#fff" }]}>{nextPrayer.name}</Text>
+            <Text style={[{ fontSize: 20, textAlign: 'left', bottom: 15 }, themeMode === "dark" && { color: "#fff" }]}> {t(`prayer.${nextPrayer.name.toLowerCase()}`)}</Text>
             <Text style={[{ fontSize: 22, textAlign: 'right', bottom: 15 }, themeMode === "dark" && { color: "#fff" }]}>- {remainingTime}</Text>
           </View>
         </View>

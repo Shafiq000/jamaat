@@ -1,15 +1,17 @@
-import { Pressable, StyleSheet, Text, View,Alert } from 'react-native'
+import { Pressable, StyleSheet, Text, View,Alert,I18nManager } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import HeaderBack from '../Components/HeaderBack'
 import CircleIcon from 'react-native-vector-icons/AntDesign';
 import DeleteIcon from 'react-native-vector-icons/AntDesign';
 import { useAuthContext } from '../Navigations/AuthContext';
+import { useTranslation } from "react-i18next";
 
 const Profile = ({ navigation }) => {
     const { user, signOut } = useAuthContext(); // Ensure this hook is used properly
     const [password, setPassword] = useState('******'); // Initially masked
     const [showPassword, setShowPassword] = useState(false);
     const { themeMode } = useAuthContext();
+    const { t } = useTranslation();
 
     useEffect(() => {
         if (showPassword) {
@@ -32,13 +34,13 @@ const Profile = ({ navigation }) => {
 
     return (
         <View style={styles.mainContainer}>
-            <HeaderBack title={'Profile'} navigation={navigation} />
+            <HeaderBack title={t('profile')} navigation={navigation} />
            <View style={[{flex:1},themeMode === "dark" && { backgroundColor: "#1C1C22" }]}>
            <View style={styles.container}>
                 <Pressable onPress={handleToFullname} style={[styles.boxItem,themeMode === "dark" && { backgroundColor: "#363B33" }]}>
                     <View style={{ marginHorizontal: 10, marginVertical: 8 }}>
-                        <Text style={{ color: '#B0A695' }}>Fullname</Text>
-                        <CircleIcon name='rightcircleo' size={25} style={[styles.icon,themeMode === "dark" && {color:'#fff' }]} />
+                        <Text style={[{ color: '#B0A695' },]}>{t('fullname')}</Text>
+                        <CircleIcon name={I18nManager.isRTL ? 'leftcircleo' : 'rightcircleo'} size={25} style={[styles.icon,themeMode === "dark" && {color:'#fff' }]} />
                         <Text style={[styles.userStyle,themeMode === "dark" && {color:'#fff' }]}>{user?.displayName}</Text>
                     </View>
                 </Pressable>
@@ -46,8 +48,8 @@ const Profile = ({ navigation }) => {
             <View style={styles.container}>
                 <Pressable onPress={handleToEmail}  style={[styles.boxItem,themeMode === "dark" && { backgroundColor: "#363B33" }]}>
                     <View style={{ marginHorizontal: 10, marginVertical: 8 }}>
-                        <Text style={{ color: '#B0A695' }}>Email</Text>
-                        <CircleIcon name='rightcircleo' size={25} style={[styles.icon,themeMode === "dark" && {color:'#fff' }]} />
+                        <Text style={{ color: '#B0A695' }}>{t('email')}</Text>
+                        <CircleIcon name={I18nManager.isRTL ? 'leftcircleo' : 'rightcircleo'} size={25} style={[styles.icon,themeMode === "dark" && {color:'#fff' }]} />
                         <Text style={[styles.userStyle,themeMode === "dark" && {color:'#fff' }]}>{user?.email}</Text>
                     </View>
                 </Pressable>
@@ -55,8 +57,8 @@ const Profile = ({ navigation }) => {
             <View style={styles.container}>
                 <Pressable onPress={handleToUpdatePassowrd}  style={[styles.boxItem,themeMode === "dark" && { backgroundColor: "#363B33" }]}>
                     <View style={{ marginHorizontal: 10, marginVertical: 8 }}>
-                        <Text style={{ color: '#B0A695' }}>Password</Text>
-                        <CircleIcon name='rightcircleo' size={25} style={[styles.icon,themeMode === "dark" && {color:'#fff' }]}/>
+                        <Text style={{ color: '#B0A695' }}>{t('password')}</Text>
+                        <CircleIcon name={I18nManager.isRTL ? 'leftcircleo' : 'rightcircleo'}size={25} style={[styles.icon,themeMode === "dark" && {color:'#fff' }]}/>
                         <Text style={[styles.userStyle,themeMode === "dark" && {color:'#fff' }]}>{password}</Text>
                     </View>
                 </Pressable>
@@ -67,7 +69,7 @@ const Profile = ({ navigation }) => {
             }}>
                 <View style={styles.deactiveAcnt}>
                     <DeleteIcon name='delete' size={20} style={styles.deleticon} />
-                    <Text style={{ fontSize: 15, fontWeight: '600', color: 'red' }}>Deactivate Account</Text>
+                    <Text style={{ fontSize: 15, fontWeight: '600', color: 'red' }}>{t('deactivate_account')}</Text>
                 </View>
             </Pressable>
            </View>
@@ -103,7 +105,8 @@ const styles = StyleSheet.create({
     userStyle: {
         fontSize: 15,
         fontWeight: '700',
-        top: 15
+        top: 15,
+        alignSelf:I18nManager.isRTL ? "flex-end" : "flex-start"
     },
     deactiveAcnt: {
         flexDirection: 'row',

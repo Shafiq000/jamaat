@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { Pressable, SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import ExclaIcon from 'react-native-vector-icons/AntDesign';
+import { Pressable, SafeAreaView, StyleSheet, Text, View, I18nManager } from 'react-native';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import LocIcon from 'react-native-vector-icons/EvilIcons';
 import moment from 'moment';
 import { useAuthContext } from '../Navigations/AuthContext';
 import LinearGradient from 'react-native-linear-gradient';
+import { useTranslation } from "react-i18next";
+
 const Masjid = ({ navigation }) => {
   const [homeMasjid, setHomeMasjid] = useState(null);
   const [nextPrayer, setNextPrayer] = useState({});
   const [remainingTime, setRemainingTime] = useState('');
   const [intervalId, setIntervalId] = useState(null);
   const { themeMode } = useAuthContext();
+  const { t } = useTranslation();
 
   const fetchHomeMasjid = async () => {
     try {
@@ -86,58 +88,77 @@ const Masjid = ({ navigation }) => {
     navigation.navigate('MasjidDetails', { itemId: item.id });
   };
 
+    // const number = [1,2,3,5,]
+    // const removeelement = 3
+    // const findarray = number.filter(el => el !== removeelement)
+    // // const multy = number.filter((number => number % 2 !==0))
+    // // const uniq = [...new Set(number)]
+    // console.log("findarray:", findarray);
+    
   return (
     <SafeAreaView style={{ flex: 1 }}>
       {homeMasjid ? (
-        <LinearGradient 
-        colors={['rgba(10, 150, 135, 0.8)', 'rgba(10, 148, 132, 1)']}
-        style={styles.forMosqueContainer}
+        <LinearGradient
+          colors={['rgba(10, 150, 135, 0.8)', 'rgba(10, 148, 132, 1)']}
+          style={styles.forMosqueContainer}
         >
           <Pressable onPress={() => handleItemPress(homeMasjid)} style={styles.forMosqueContainer}>
-          <View style={styles.innerBodyMosqueStyle}>
-            <View style={styles.titleStyleContainer}>
-              <Text style={styles.title}>{homeMasjid.title}</Text>
-              <View style={{ flexDirection: 'row' }}>
-                <LocIcon name='location' size={25} color={'#fff'} />
-                <Text style={styles.address}>{homeMasjid.address}</Text>
+            <View style={styles.innerBodyMosqueStyle}>
+              <View style={styles.titleStyleContainer}>
+                <Text style={[styles.title,]}>
+                  {homeMasjid.title}
+                </Text>
+                <View style={{ flexDirection: 'row' }}>
+                  <LocIcon name='location' size={25} color={'#fff'} />
+                  <Text numberOfLines={1} style={[styles.address, ]}>
+                    {homeMasjid.address}
+                  </Text>
+                </View>
               </View>
-            </View>
 
-            <Text style={{ bottom: 5, left: 10,color:'#fff' }}>Next Jamaat {nextPrayer.prayer}</Text>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 10 }}>
-              <Text style={{ fontSize: 18, fontWeight: '700',color:'#ffff' }}>{nextPrayer.time ? nextPrayer.time.format('h:mm A') : ''}</Text>
-              <Text style={{ fontSize: 18, fontWeight: '700', color:'#ffff' }}>{remainingTime}</Text>
+              <Text style={{ bottom: 5, left: 10, color: '#fff' }}>
+                {t('next_jamaat')} {nextPrayer.prayer ? t(`prayer.${nextPrayer.prayer.toLowerCase()}`) : ''}
+              </Text>
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 10 }}>
+                <Text style={{ fontSize: 18, fontWeight: '700', color: '#ffff' }}>{nextPrayer.time ? nextPrayer.time.format('h:mm A') : ''}</Text>
+                <Text style={{ fontSize: 18, fontWeight: '700', color: '#ffff' }}>{remainingTime}</Text>
+              </View>
+              <View style={styles.nameTimeStyle}>
+                {homeMasjid.prayerTimes && Object.entries(homeMasjid.prayerTimes).map(([prayer, time]) => {
+                  const isCurrentPrayer = nextPrayer.prayer === prayer;
+                  return (
+                    <View key={prayer}>
+                      <Text style={[styles.prayerName, isCurrentPrayer && styles.currentPrayer]}>
+                        {t(`prayer.${prayer.toLowerCase()}`)}
+                      </Text>
+                      <Text style={[styles.prayerTime, isCurrentPrayer && styles.currentPrayer]}>
+                        {time.split(' ')[0]}{'\n'}{time.split(' ')[1]}
+                      </Text>
+                    </View>
+                  );
+                })}
+              </View>
+
+
             </View>
-            <View style={styles.nameTimeStyle}>
-              {homeMasjid.prayerTimes && Object.entries(homeMasjid.prayerTimes).map(([prayer, time]) => {
-                const isCurrentPrayer = nextPrayer.prayer === prayer;
-                return (
-                  <View key={prayer}>
-                    <Text style={[styles.prayerName, isCurrentPrayer && styles.currentPrayer]}>{prayer}</Text>
-                    <Text style={[styles.prayerTime, isCurrentPrayer && styles.currentPrayer]}>{time.split(' ')[0]}{'\n'}{time.split(' ')[1]}</Text>
-                  </View>
-                );
-              })}
-            </View>
-          </View>
-        </Pressable>
+          </Pressable>
         </LinearGradient>
       ) : (
-      <LinearGradient 
-      colors={['rgba(10, 150, 135, 0.8)', 'rgba(10, 148, 132, 1)']}
-      style={styles.bodyContainer}
-      >
+        <LinearGradient
+          colors={['rgba(10, 150, 135, 0.8)', 'rgba(10, 148, 132, 1)']}
+          style={styles.bodyContainer}
+        >
           <View style={styles.bodyContainer}>
-          <View style={styles.innerBodyStyle}>
-            {/* <ExclaIcon name='exclamationcircleo' size={40} color={'#fff'} /> */}
-            <Text style={{fontSize:15,fontWeight:'700',color:'#fff'}}>Set Home</Text>
-            <Text style={{color:'#fff'}}>You don't have set any mosque as home.</Text>
-            <Pressable onPress={handlemosque} style={styles.btnstyle}>
-              <Text style={{ color: '#0a9484', fontWeight: '600' }}>Set Home</Text>
-            </Pressable>
+            <View style={styles.innerBodyStyle}>
+              {/* <ExclaIcon name='exclamationcircleo' size={40} color={'#fff'} /> */}
+              <Text style={{ fontSize: 15, fontWeight: '700', color: '#fff' }}>{t('set_home')}</Text>
+              <Text style={{ color: '#fff' }}>{t('notset_home_masjid')}.</Text>
+              <Pressable onPress={handlemosque} style={styles.btnstyle}>
+                <Text style={{ color: '#0a9484', fontWeight: '600' }}>{t('set_home')}</Text>
+              </Pressable>
+            </View>
           </View>
-        </View>
-      </LinearGradient>
+        </LinearGradient>
       )}
     </SafeAreaView>
   );
@@ -148,7 +169,7 @@ export default Masjid;
 const styles = StyleSheet.create({
   bodyContainer: {
     height: 200,
-    width:'100%',
+    width: '100%',
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 7,
@@ -162,7 +183,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    gap:5
+    gap: 5
   },
   btnstyle: {
     justifyContent: 'center',
@@ -173,25 +194,26 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   title: {
-    color:'#FFA500',
+    color: '#FFA500',
     fontSize: 18,
     fontWeight: 'bold',
   },
   address: {
+    flex: 1,
     fontSize: 16,
     marginBottom: 10,
-    color:'#fff'
+    color: '#fff'
   },
   prayerName: {
     fontSize: 13,
     textAlign: 'center',
-    color:'#fff'
+    color: '#fff'
   },
   prayerTime: {
     fontSize: 12,
     fontWeight: "700",
     textAlign: 'center',
-    color:'#fff'
+    color: '#fff'
   },
   currentPrayer: {
     color: '#FFA500',
@@ -228,7 +250,6 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     justifyContent: 'center',
     alignItems: 'center',
-    height:200
-},
+    height: 200
+  },
 });
-  

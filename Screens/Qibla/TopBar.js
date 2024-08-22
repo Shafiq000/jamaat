@@ -1,15 +1,16 @@
 import { StyleSheet, View, Pressable } from 'react-native';
 import React from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import Icon from 'react-native-vector-icons/AntDesign';
 import Compass from '../Qibla/Compass';
 import Map from '../Qibla/Map';
 import { useNavigation } from '@react-navigation/native';
+import { useTranslation } from "react-i18next";
 
 const Tab = createMaterialTopTabNavigator();
 
 const TopBar = () => {
   const navigation = useNavigation();
+  const { t } = useTranslation();
 
   // const goBack = () => {
   //   navigation.goBack();
@@ -47,8 +48,8 @@ const TopBar = () => {
           tabBarLabelStyle: { fontSize: 14, textTransform: 'none' },
         }}
       >
-        <Tab.Screen name="Compass" component={Compass} />
-        <Tab.Screen name="Map" component={Map} />
+        <Tab.Screen name={t("compass")} component={Compass} />
+        <Tab.Screen name={t("map")} component={Map} />
       </Tab.Navigator>
     </View>
   );

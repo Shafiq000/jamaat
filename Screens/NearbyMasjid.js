@@ -6,33 +6,68 @@ import mosques from '../Jsondata/Mosques.json';
 import haversine from 'haversine';
 import LocIcon from 'react-native-vector-icons/EvilIcons';
 import { useAuthContext } from '../Navigations/AuthContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useTranslation } from "react-i18next";
+
 const NearbyMasjid = ({ navigation }) => {
   const [currentLocation, setCurrentLocation] = useState(null);
   const { themeMode } = useAuthContext();
+  const [mosquesData, setMosquesData] = useState(mosques.data);
+  const { t } = useTranslation();
+
+
+  const ensureUniqueIds = (data) => {
+    const seenIds = new Set();
+    return data.map(item => {
+      while (seenIds.has(item.id)) {
+        item.id += 'x'; 
+      }
+      seenIds.add(item.id);
+      return item;
+    });
+  };
 
   useEffect(() => {
-    const requestLocationPermission = async () => {
-      if (Platform.OS === 'android') {
-        const granted = await PermissionsAndroid.request(
-          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-          {
-            title: 'Location Permission',
-            message: 'This app needs access to your location to show nearby mosques.',
-            buttonNeutral: 'Ask Me Later',
-            buttonNegative: 'Cancel',
-            buttonPositive: 'OK',
-          },
-        );
-        if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
-          console.log('Location permission denied');
-          return;
-        }
-      }
-      getCurrentLocation();
-    };
-
+    fetchMosquesData();
     requestLocationPermission();
   }, []);
+  
+  const fetchMosquesData = async () => {
+    try {
+      const storedData = await AsyncStorage.getItem('allMosquesData');
+      let combinedData = mosques.data;
+  
+      if (storedData) {
+        const parsedStoredData = JSON.parse(storedData);
+        combinedData = [...combinedData, ...parsedStoredData];
+      }
+      combinedData = ensureUniqueIds(combinedData);
+      setMosquesData(combinedData);
+
+    } catch (error) {
+      console.error('Failed to load mosques data', error);
+    }
+  };
+  
+  const requestLocationPermission = async () => {
+    if (Platform.OS === 'android') {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        {
+          title: 'Location Permission',
+          message: 'This app needs access to your location to show nearby mosques.',
+          buttonNeutral: 'Ask Me Later',
+          buttonNegative: 'Cancel',
+          buttonPositive: 'OK',
+        },
+      );
+      if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
+        console.log('Location permission denied');
+        return;
+      }
+    }
+    getCurrentLocation();
+  };
 
   const getCurrentLocation = () => {
     Geolocation.getCurrentPosition(
@@ -87,7 +122,7 @@ const NearbyMasjid = ({ navigation }) => {
           <Text style={styles.title}>{item.mosque.title}</Text>
           <View style={{ flexDirection: 'row' }}>
             <LocIcon name='location' size={22} color={'#fff'} />
-            <Text style={styles.address}>{item.mosque.location.address}</Text>
+            <Text numberOfLines={1} style={styles.address}>{item.mosque.location.address}</Text>
           </View>
         </View>
         <View style={styles.distanceContainer}>
@@ -98,14 +133,17 @@ const NearbyMasjid = ({ navigation }) => {
   };
 
   return (
-    <View style={[styles.container,themeMode === "dark" && { backgroundColor: "#1C1C22" }]}>
-      <HeaderBack title={'Nearby Masjids'} navigation={navigation} />
+    <View style={[styles.container, themeMode === "dark" && { backgroundColor: "#1C1C22" }]}>
+      <HeaderBack title={t('masjid_nearby')} navigation={navigation} />
       <FlatList
-        data={mosques.data}
+        data={mosquesData}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item) => item.id.toString()}  // Ensure item.id is unique
         contentContainerStyle={styles.list}
       />
+
+
+
     </View>
   );
 };

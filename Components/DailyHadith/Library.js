@@ -4,9 +4,12 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import AllTitles from '../../Jsondata/AllTitles.json'
 import { useAuthContext } from "../../Navigations/AuthContext";
 import HeaderBack from "../HeaderBack";
+import { useTranslation } from "react-i18next";
+
 const Library = ({ navigation }) => {
   const { themeMode } = useAuthContext();
   const [favoriteDuas, setFavoriteDuas] = useState([]);
+  const { t } = useTranslation();
 
   const fetchFavoritetitles = async () => {
     try {
@@ -88,7 +91,7 @@ const Library = ({ navigation }) => {
 
   return (
     <View style={[styles.mainContainer, themeMode == "dark" && { backgroundColor: "#26272C" }]}>
-      <HeaderBack title={'Library'} navigation={navigation} />
+      <HeaderBack title={t('library')} navigation={navigation} />
       <FlatList
         showsVerticalScrollIndicator={false}
         data={favoriteDuas}

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Pressable } from 'react-native'
+import { StyleSheet, Text, View, Pressable,I18nManager } from 'react-native'
 import React from 'react'
 import Icon from 'react-native-vector-icons/AntDesign';
 
@@ -6,9 +6,9 @@ const HeaderBack = ({ title, navigation }) => {
     return (
         <View style={styles.headerContainer}>
             <Pressable hitSlop={20} onPress={() => navigation.goBack()} style={styles.icon}>
-                <Icon name='left' size={25} color={'#fff'} />
+                <Icon  name={I18nManager.isRTL ? "right" : "left"}  size={25} color={'#fff'} style={{ alignSelf: I18nManager.isRTL ? 'left' : 'right' }} />
             </Pressable>
-            <Text numberOfLines={1}   style={styles.title}>{title}</Text>
+            <Text numberOfLines={1} style={styles.title}>{title}</Text>
         </View>
     )
 }

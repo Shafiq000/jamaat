@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, memo } from 'react';
-import { StyleSheet, Text, View, Pressable, FlatList, Dimensions, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, Pressable, FlatList, Dimensions, SafeAreaView, I18nManager } from 'react-native';
 import { Switch } from 'react-native-paper';
 import ToastAndroid from "react-native-root-toast";
 import Feather from 'react-native-vector-icons/AntDesign';
@@ -7,6 +7,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import notifee, { AndroidImportance, TriggerType } from '@notifee/react-native';
 import { ActivityIndicator } from 'react-native-paper';
 import { useAuthContext } from '../../Navigations/AuthContext';
+import { useTranslation } from "react-i18next";
+
 const windowWidth = Dimensions.get("window").width;
 const daysToFetch = 7;
 const PrayerTable = () => {
@@ -22,6 +24,7 @@ const PrayerTable = () => {
     const [today, setToday] = useState(new Date());
     const { themeMode } = useAuthContext();
     const [loading, setLoading] = useState(true);
+    const { t } = useTranslation();
 
     useEffect(() => {
 
@@ -40,14 +43,14 @@ const PrayerTable = () => {
             const fetchedDates = [];
             const fetchedPrayerData = [];
             let filteredPrayers = [];
-    
+
             for (let i = 0; i < daysToFetch; i++) {
                 const targetDate = new Date(year, month - 1, date + i);
                 const response = await fetchPrayerDataForDate(targetDate);
                 const prayerDataForDate = await response.json();
                 const currentTime = new Date().getTime();
                 const prayerTimes = prayerDataForDate.data[targetDate.getDate() - 1].timings;
-    
+
                 // Filter out unnecessary prayers
                 filteredPrayers = Object.entries(prayerTimes)
                     .filter(([prayerName, _]) => !["Sunset", "Imsak", "Midnight", "Firstthird", "Lastthird"].includes(prayerName))
@@ -55,16 +58,16 @@ const PrayerTable = () => {
                         const formattedTime = formatTimeAMPM(prayerTime);
                         return { prayerName, prayerTime: formattedTime };
                     });
-    
+
                 fetchedPrayerData.push(filteredPrayers);
                 fetchedDates.push(targetDate);
-    
+
                 // Store fetched prayer data in AsyncStorage
                 await AsyncStorage.setItem(`prayerData_${(targetDate)}`, JSON.stringify(filteredPrayers));
-    
+
                 // Store fetched dates in AsyncStorage
                 await AsyncStorage.setItem('fetchedDates', JSON.stringify(fetchedDates));
-    
+
                 // Set current index for prayer data
                 const currentindex = findCurrentPrayerIndex(prayerTimes, currentTime);
                 if (currentindex > 0) {
@@ -82,39 +85,39 @@ const PrayerTable = () => {
             console.error('Error fetching prayer times:', error);
             setLoading(false);
         }
-        
+
     };
     useEffect(() => {
         // Load switch states from AsyncStorage
         loadSwitchStates();
-        
+
         // Load prayer data and dates from AsyncStorage
         loadPrayerData();
     }, []);
-    
+
     const loadPrayerData = async () => {
         try {
             // Load prayer data
             const fetchedDatesString = await AsyncStorage.getItem('fetchedDates');
             const fetchedDates = fetchedDatesString ? JSON.parse(fetchedDatesString) : [];
             const fetchedPrayerData = [];
-            
+
             // Iterate through fetched dates and load prayer data for each date
             for (const date of fetchedDates) {
                 const prayerDataString = await AsyncStorage.getItem(`prayerData_${(date)}`);
                 const prayerData = prayerDataString ? JSON.parse(prayerDataString) : [];
                 fetchedPrayerData.push(prayerData);
             }
-    
+
             // Set the loaded prayer data and dates
             setDates(fetchedDates);
             setPrayerData(fetchedPrayerData);
         } catch (error) {
             console.error('Error loading prayer data:', error);
         }
-       
+
     };
-    
+
 
     const fetchPrayerDataForDate = async (date) => {
         const year = date.getFullYear();
@@ -141,11 +144,18 @@ const PrayerTable = () => {
                     (item) => item.gregorian.date === formatDate(today)
                 );
                 if (currentDateData) {
+                    const hijriMonthEn = currentDateData.hijri.month.en;
+                    const translatedHijriMonth = t(`month_name.${hijriMonthEn}`);
                     setHijriDate(
-                        `${currentDateData.hijri.day} ${currentDateData.hijri.month.en}, ${currentDateData.hijri.year}`
+                        `${currentDateData.hijri.day} ${translatedHijriMonth} ${currentDateData.hijri.year}`
                     );
+
+                    // Get the translation for Gregorian month and day
+                    const gregorianMonth = t(`month_name_gregorian.${currentDateData.gregorian.month.en}`);
+                    const gregorianDay = t(`day_name_gregorian.${currentDateData.gregorian.weekday.en}`);
+
                     setGregorianDate(
-                        `${currentDateData.gregorian.weekday.en}, ${currentDateData.gregorian.day} ${currentDateData.gregorian.month.en}`
+                        `${gregorianDay}, ${currentDateData.gregorian.day} ${gregorianMonth}`
                     );
                 }
             } catch (error) {
@@ -343,9 +353,9 @@ const PrayerTable = () => {
             <View>
                 <View style={{ justifyContent: "space-between", top: 30 }}>
                     <View style={styles.body}>
-                        <Text style={[{ right: 7 }, themeMode === "dark" && { color: "#fff" }]}>Prayer</Text>
-                        <Text style={[themeMode === "dark" && { color: "#fff" }]}>Time</Text>
-                        <Text style={[themeMode === "dark" && { color: "#fff" }]}>Alert</Text>
+                        <Text style={[{ right: 7 }, themeMode === "dark" && { color: "#fff" }]}>{t('prayer_time')}</Text>
+                        <Text style={[themeMode === "dark" && { color: "#fff" }]}>{t('time')}</Text>
+                        <Text style={[themeMode === "dark" && { color: "#fff" }]}>{t('alert')}</Text>
                     </View>
                     <View style={{ borderTopColor: "#C7C7C7", borderTopWidth: 1, margin: 10 }}>
                     </View>
@@ -353,7 +363,7 @@ const PrayerTable = () => {
                 {item.map(({ prayerName, prayerTime }, index) => {
                     return (
                         <View key={index} style={styles.tabBody}>
-                            <Text style={[{ textAlignVertical: "center", width: 57 }, themeMode === "dark" && { color: "#fff" }, currentPrayerIndex === index && { color: '#0a9484', fontWeight: "600", fontSize: 14 },]}>{prayerName}</Text>
+                            <Text style={[{ textAlignVertical: "center", width: 57 }, themeMode === "dark" && { color: "#fff" }, currentPrayerIndex === index && { color: '#0a9484', fontWeight: "600", fontSize: 14 },]}>{t(`prayer.${prayerName.toLowerCase()}`)}</Text>
                             <Text style={[{ textAlignVertical: "center", textAlign: "left", }, themeMode === "dark" && { color: "#fff" }, currentPrayerIndex === index && { color: '#0a9484', fontWeight: "600", fontSize: 14 }]}>{prayerTime}</Text>
 
                             <Switch
@@ -369,11 +379,15 @@ const PrayerTable = () => {
         );
     };
 
+
     const handleScroll = (event) => {
         const { contentOffset } = event.nativeEvent;
         const index = Math.round(contentOffset.x / windowWidth);
-        updateDate(index);
-    };
+
+        // Adjust index for RTL mode
+        const adjustedIndex = I18nManager.isRTL ? daysToFetch - 1 - index : index;
+        updateDate(adjustedIndex);
+    }
 
     return (
         <SafeAreaView style={{ flex: 1, marginTop: 55 }}>
@@ -386,14 +400,14 @@ const PrayerTable = () => {
                 <>
                     <View style={styles.dateSetting}>
                         <Pressable hitSlop={30} onPress={goToPreviousDate}>
-                            <Feather name="left" size={22} style={[themeMode === "dark" && { color: "#fff" }]} />
+                            <Feather name={I18nManager.isRTL ? 'right' : 'left'} size={22} style={[themeMode === "dark" && { color: "#fff" }]} />
                         </Pressable>
                         <View style={styles.timechanger}>
                             <Text style={[{ fontSize: 18, fontWeight: '600' }, themeMode === "dark" && { color: "#fff" }]}>{gregorianDate}</Text>
                             <Text style={[{ fontSize: 16, fontWeight: '400' }, themeMode === "dark" && { color: "#fff" }]}>{hijriDate}</Text>
                         </View>
                         <Pressable hitSlop={30} onPress={goToNextDate}>
-                            <Feather name="right" size={22} style={[themeMode === "dark" && { color: "#fff" }]} />
+                            <Feather name={I18nManager.isRTL ? 'left' : 'right'} size={22} style={[themeMode === "dark" && { color: "#fff" }]} />
                         </Pressable>
                     </View>
 

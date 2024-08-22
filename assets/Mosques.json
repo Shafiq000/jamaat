@@ -1,0 +1,22 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "mosque": {
+        "title": "khhhj",
+        "location": {
+          "address": "100A, Commercial Zone Sector C Commercial Area Sector C Bahria Town, Lahore, Punjab 53720, Pakistan"
+        },
+        "image": "default_image_url"
+      },
+      "timings": {
+        "Fajr": "12:32 AM",
+        "Dhuhr": "12:32 PM",
+        "Asr": "12:32 PM",
+        "Maghrib": "12:32 PM",
+        "Isha": "12:32 PM"
+      }
+    }
+   
+  ]
+}

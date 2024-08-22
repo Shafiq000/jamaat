@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback,memo } from 'react';
-import { StyleSheet, Text, View, FlatList, Clipboard, Share, Image, Pressable } from 'react-native';
+import { StyleSheet, Text, View, FlatList, Clipboard, Share, Image, Pressable,I18nManager } from 'react-native';
 import allDua from '../../Jsondata/AllHadiths.json'
 import CopyIcon from "react-native-vector-icons/Feather";
 import ShareIcon from "react-native-vector-icons/AntDesign"
@@ -9,11 +9,13 @@ import RefreshIcon from "react-native-vector-icons/Ionicons";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAuthContext } from '../../Navigations/AuthContext';
 import HeaderBack from '../HeaderBack';
+import { useTranslation } from "react-i18next";
 
 const DailyHadith = ({ route, navigation }) => {
   const [isFavorite, setIsFavorite] = useState([]);
   const { themeMode } = useAuthContext();
   const [currentHadith, setCurrentHadith] = useState(route.params?.hadith || null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (!currentHadith) {
@@ -101,9 +103,9 @@ const DailyHadith = ({ route, navigation }) => {
   const renderItem = useCallback(({ item }) => {
     return (
       <View style={[styles.hadithContainer,themeMode == "dark" && { backgroundColor: "#26272C" }]}>
-        <Text style={[styles.arabicText, themeMode == "dark" && { color: "#fff" }]}>{item.arabic}</Text>
-        <Text style={styles.englishNarrator}>{item.english.narrator}</Text>
-        <Text style={[styles.englishText, themeMode == "dark" && { color: "#fff" }]}>{item.english.text}</Text>
+        <Text style={[styles.arabicText, { textAlign: I18nManager.isRTL ? 'left' : 'right' }, themeMode == "dark" && { color: "#fff" }]}>{item.arabic}</Text>
+        <Text style={[styles.englishNarrator, { textAlign: I18nManager.isRTL ? 'right' : 'left' },]}>{item.english.narrator}</Text>
+        <Text style={[styles.englishText, { textAlign: I18nManager.isRTL ? 'right' : 'left' }, themeMode == "dark" && { color: "#fff" }]}>{item.english.text}</Text>
         <View style={styles.iconContainer}>
           <CopyIcon
             name="copy"
@@ -150,7 +152,7 @@ const DailyHadith = ({ route, navigation }) => {
 
   return (
     <View style={[{ flex: 1 }]}>
-      <HeaderBack title={'Daily Hadith'} navigation={navigation} />
+      <HeaderBack title={t('daily_hadith')} navigation={navigation} />
       <View style={[styles.contentContainer,themeMode == "dark" && { backgroundColor: "#26272C" }]}>
         {currentHadith ? (
           <FlatList
@@ -179,7 +181,7 @@ const DailyHadith = ({ route, navigation }) => {
               source={require('../../src/Images/book.png')}
               style={{ height: 25, width: 25 }}
             />
-            <Text style={[{ textAlign: 'center', fontSize: 13, fontWeight: '500', left: 8 }, themeMode == "dark" && { color: "#fff" }]}>Read</Text>
+            <Text style={[{ textAlign: 'center', fontSize: 13, fontWeight: '500', left: 8 }, themeMode == "dark" && { color: "#fff" }]}>{t('read')}</Text>
           </View>
         </Pressable>
         <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginRight: 10 }}>
@@ -189,7 +191,7 @@ const DailyHadith = ({ route, navigation }) => {
               size={20}
               style={[styles.shareIcon, themeMode == "dark" && { color: "#fff" }]}
             />
-            <Text style={[{ textAlign: 'center', fontSize: 13, fontWeight: '500', left: 8 }, themeMode == "dark" && { color: "#fff" }]}>Share</Text>
+            <Text style={[{ textAlign: 'center', fontSize: 13, fontWeight: '500', left: 8 }, themeMode == "dark" && { color: "#fff" }]}>{t('share')}</Text>
           </Pressable>
         </View>
       </View>
@@ -238,7 +240,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   englishText: {
-    left: 5,
+    left: 4,
     marginTop: 10,
     textAlign: 'left',
     fontSize: 15,

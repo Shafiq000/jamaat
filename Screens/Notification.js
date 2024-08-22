@@ -1,11 +1,13 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View,I18nManager } from 'react-native';
 import HeaderBack from '../Components/HeaderBack';
 import { useAuthContext } from '../Navigations/AuthContext';
+import { useTranslation } from "react-i18next";
 
 const Notification = ({ navigation }) => {
   const { user, isAuthenticated } = useAuthContext();
   const { themeMode } = useAuthContext();
+  const { t } = useTranslation();
 
   const getCurrentDate = () => {
     const date = new Date();
@@ -24,14 +26,14 @@ const Notification = ({ navigation }) => {
       {isAuthenticated ? (
         <View style={{ flex: 1, alignItems: 'center', paddingVertical: 20 }}>
           <View style={[styles.welcomContainer,themeMode === "dark" && { backgroundColor: "#363B33" }]}>
-            <Text style={[styles.userInfoname,themeMode === "dark" && {color:'#fff'}]}>Welcome {user.displayName}!</Text>
+            <Text style={[styles.userInfoname,themeMode === "dark" && {color:'#fff'}]}>{t('Welcome')} {user.displayName}</Text>
             <Text style={[styles.userInfoDate,themeMode === "dark" && {color:'#fff'}]}>{getCurrentDate()}</Text>
-            <Text style={[styles.userInfoText,themeMode === "dark" && {color:'#fff'}]}>You are all set up to start using our services</Text>
+            <Text style={[styles.userInfoText,themeMode === "dark" && {color:'#fff'}]}>{t('service')}</Text>
           </View>
         </View>
       ) : (
         <View style={[{ flex: 1, alignItems: 'center', justifyContent: 'center' },themeMode === "dark" && { backgroundColor: "#1C1C22" }]}>
-          <Text style={[{ fontSize: 15, fontWeight: '500' },themeMode === "dark" && { color:'#fff' }]}>No Logged-in User</Text>
+          <Text style={[{ fontSize: 15, fontWeight: '500' },themeMode === "dark" && { color:'#fff' }]}>{t('not_login')}</Text>
         </View>
       )}
     </View>

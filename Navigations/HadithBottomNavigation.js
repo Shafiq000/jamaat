@@ -10,11 +10,14 @@ import Header from '../Components/Header'; // Import the Header component
 import DailyHadith from '../Components/DailyHadith/DailyHadith';
 import { useAuthContext } from './AuthContext';
 import AppHomeHadith from '../Screens/DailyHadith/AppHomeHadith';
+import { useTranslation } from "react-i18next";
+
 const Tab = createBottomTabNavigator();
 
 const HadithBottomNavigation = ({ navigation }) => {
     const windowHeight = useWindowDimensions().height;
     const { themeMode } = useAuthContext();
+    const { t } = useTranslation();
 
     return (
         <View style={{ flex: 1 }}>
@@ -32,31 +35,31 @@ const HadithBottomNavigation = ({ navigation }) => {
                 }}
             >
                 <Tab.Screen
-                    name="Home"
+                    name={t('home')}
                     component={AppHomeHadith}
                     options={{
-                        headerLeft: () => <Header navigation={navigation} title="Home" />, 
-                        tabBarLabel: 'Home',
+                        headerLeft: () => <Header navigation={navigation} title={t('home')} />, 
+                        tabBarLabel:t('home'),
                         tabBarIcon: ({ color, size }) => (
                             <HomeIcon name='home-outline' style={{ fontSize: size, color: color }} />
                         ),
                     }}
                 />
                 <Tab.Screen
-                    name="Library"
+                    name={t('library')}
                     component={Library}
                     options={{
-                        tabBarLabel: 'Library',
+                        tabBarLabel: t('library'),
                         tabBarIcon: ({ color, size }) => (
                             <LibraryIcon name='library-outline' style={{ fontSize: size, color: color }} />
                         ),
                     }}
                 />
                 <Tab.Screen
-                    name="DailyHadith"
+                    name={t('daily_hadith')}
                     component={DailyHadith}
                     options={{
-                        tabBarLabel: 'Daily Hadith',
+                        tabBarLabel: t('daily_hadith'),
                         tabBarIcon: ({ color, size }) => (
                             <Clipboard name='clipboard-text-clock-outline' style={{ fontSize: size, color: color }} />
                         ),

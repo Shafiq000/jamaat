@@ -1,4 +1,4 @@
-import { ActivityIndicator, StyleSheet, Text, View, FlatList, Pressable, Share, Clipboard } from 'react-native';
+import { ActivityIndicator, StyleSheet, Text, View, FlatList, Pressable, Share, Clipboard,I18nManager } from 'react-native';
 import React, { useState, useEffect, useCallback,memo } from 'react';
 import HeaderBack from '../../Components/HeaderBack';
 import { useAuthContext } from '../../Navigations/AuthContext';
@@ -7,11 +7,13 @@ import ShareIcon from "react-native-vector-icons/AntDesign";
 import duasData from '../../Jsondata/Duas.json';
 import CopyIcon from "react-native-vector-icons/Feather";
 import ToastAndroid from "react-native-root-toast";
+import { useTranslation } from "react-i18next";
 
 const RandomDuaScreen = ({ navigation, route }) => {
     const { themeMode } = useAuthContext();
     const [verse, setVerse] = useState(route.params?.verse || null);
     const [loading, setLoading] = useState(!route.params?.verse);
+    const { t } = useTranslation();
 
     const fetchRandomDua = () => {
         try {
@@ -65,10 +67,10 @@ const RandomDuaScreen = ({ navigation, route }) => {
                         {verse && (
                             <View style={{ flex: 1 }}>
                                 <View style={[styles.hadithContainer, themeMode == "dark" && { backgroundColor: "#26272C" }]}>
-                                    <Text style={[styles.arabicText, themeMode == "dark" && { color: "#fff" }]}>{verse.duaArabic}</Text>
-                                    <Text style={[styles.englishText, themeMode == "dark" && { color: "#fff" }]}>{verse.duaEnglish}</Text>
-                                    <Text style={[styles.englishText, themeMode == "dark" && { color: "#fff" }]}>{verse.translation}</Text>
-                                    <Text style={[styles.englishText, themeMode == "dark" && { color: "#fff" }]}>{verse.references}</Text>
+                                    <Text style={[styles.arabicText,{ textAlign: I18nManager.isRTL ? 'left' : 'right' }, themeMode == "dark" && { color: "#fff" }]}>{verse.duaArabic}</Text>
+                                    <Text style={[styles.englishText,{ textAlign: I18nManager.isRTL ? 'right' : 'left' }, themeMode == "dark" && { color: "#fff" }]}>{verse.duaEnglish}</Text>
+                                    <Text style={[styles.englishText,{ textAlign: I18nManager.isRTL ? 'right' : 'left' }, themeMode == "dark" && { color: "#fff" }]}>{verse.translation}</Text>
+                                    <Text style={[styles.englishText,{ textAlign: I18nManager.isRTL ? 'right' : 'left' }, themeMode == "dark" && { color: "#fff" }]}>{verse.references}</Text>
                                 </View>
                                 <View style={styles.copyContainer}>
                                     <CopyIcon
@@ -88,7 +90,7 @@ const RandomDuaScreen = ({ navigation, route }) => {
 
     return (
         <View style={[{ flex: 1 }]}>
-            <HeaderBack title={'Daily Dua'} navigation={navigation} />
+            <HeaderBack title={t('daily_dua')} navigation={navigation} />
             <View style={[styles.contentContainer, themeMode == "dark" && { backgroundColor: "#26272C" }]}>
                 <FlatList
                     showsVerticalScrollIndicator={false}
@@ -113,7 +115,7 @@ const RandomDuaScreen = ({ navigation, route }) => {
                         size={20}
                         style={[styles.shareIcon, themeMode == "dark" && { color: "#fff" }]}
                     />
-                    <Text style={[{ fontSize: 13, fontWeight: '500', color: '#0a9484', right: 5 }, themeMode == "dark" && { color: "#fff" }]}>Share</Text>
+                    <Text style={[{ fontSize: 13, fontWeight: '500', color: '#0a9484', right: 5 }, themeMode == "dark" && { color: "#fff" }]}>{t('share')}</Text>
                 </Pressable>
             </View>
         </View>
