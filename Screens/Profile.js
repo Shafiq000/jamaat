@@ -95,7 +95,8 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         borderWidth: 1,
         borderColor: '#DCDCDC',
-        backgroundColor: '#E3E6E8'
+        backgroundColor: '#E3E6E8',
+       
     },
     icon: {
         position: 'absolute',
@@ -106,7 +107,10 @@ const styles = StyleSheet.create({
         fontSize: 15,
         fontWeight: '700',
         top: 15,
-        alignSelf:I18nManager.isRTL ? "flex-end" : "flex-start"
+        // alignSelf:I18nManager.isRTL ? "flex-end" : "flex-start"
+        // textAlign:I18nManager.isRTL? "right" : "left",
+        paddingHorizontal:50,
+
     },
     deactiveAcnt: {
         flexDirection: 'row',

@@ -171,7 +171,7 @@ const RegisterMasjid1 = ({ navigation }) => {
             await AsyncStorage.setItem('allMosquesData', JSON.stringify(dataToSave.data));
     
             navigation.navigate("Home");
-            Alert.alert('Success', 'Your data has been saved successfully.');
+            Alert.alert('Success', 'Your data has been upload successfully.');
         } catch (error) {
             console.error('Failed to save data', error);
             Alert.alert('Error', 'Failed to save data.');

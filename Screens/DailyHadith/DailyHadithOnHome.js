@@ -65,7 +65,7 @@ const DailyHadithOnHome = () => {
 
     const navigateToDailyHadith = () => {
         if (currentHadith) {
-            navigation.navigate('HadithBottomNavigation', { screen: 'DailyHadith', params: { hadith: currentHadith } });
+            navigation.navigate('DailyHadith',{ hadith: currentHadith });
         }
     };
     return (

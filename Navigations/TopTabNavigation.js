@@ -31,7 +31,7 @@ const TopTabNavigation = () => {
           backgroundColor: 'transparent',
         },
         tabBarContentContainerStyle: [{ backgroundColor: 'transparent', }, themeMode === "dark" && { backgroundColor: "#1C1C22" }],
-        tabBarItemStyle: { width: 85, height: 40 },
+        tabBarItemStyle: { width: 75, height: 40 },
       }}
     >
       <Tab.Screen
@@ -39,7 +39,7 @@ const TopTabNavigation = () => {
         component={Masjid}
         options={{
           tabBarLabel: ({ focused }) => (
-            <Text style={{ color: focused ? '#fff' : '#000', backgroundColor: focused ? '#0a9484' : '#EFEFEF', left: 15, padding: 15, height: 50, borderRadius: 10, textAlign: 'center', width: '100%', fontWeight: '600' }}>
+            <Text style={{ color: focused ? '#fff' : '#000', backgroundColor: focused ? '#0a9484' : '#EFEFEF', left: 20, padding: 15, height: 50, borderRadius: 10, textAlign: 'center', width: '100%', fontWeight: '600' }}>
               {t('iqama_time')}
             </Text>
           )
