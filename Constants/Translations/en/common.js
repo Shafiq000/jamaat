@@ -192,8 +192,8 @@ export default {
 
   // ----------Notification Setting ---------//
   namaz_notification: 'Namaz Notification',
-  default: 'ڈیفالٹ',
-  adhan: 'اذان',
+  default: 'Default',
+  adhan: 'Adhan',
   urdu: 'Urdu',
 
   // ----------login screeng ---------//
